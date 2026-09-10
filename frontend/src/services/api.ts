@@ -42,3 +42,22 @@ export async function saveReview(review: any): Promise<any> {
   }
   return res.json();
 }
+
+/** Report 생성 */
+export async function generateReport(analysisId: string): Promise<any> {
+  const res = await fetch(`${BASE_URL}/api/reports`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ analysis_id: analysisId }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`API Error [${res.status}] POST /api/reports: ${text}`);
+  }
+  return res.json();
+}
+
+/** Report 조회 */
+export function getReport(reportId: string): Promise<any> {
+  return fetchJSON<any>(`/api/reports/${reportId}`);
+}

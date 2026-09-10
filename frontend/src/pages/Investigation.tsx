@@ -1,7 +1,7 @@
 // frontend/src/pages/Investigation.tsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCaseById, getReviews, saveReview } from "../services/api";
+import { getCaseById, getReviews, saveReview, generateReport } from "../services/api";
 import type { AnalysisResult } from "../types/analysis";
 import type { Review } from "../types/review";
 import GraphView from "../components/GraphView";
@@ -72,12 +72,31 @@ export default function Investigation() {
 
   return (
     <main className="investigation-layout">
-      <div className="investigation-header">
-        <button className="btn-back" onClick={() => navigate("/")}>&larr; Back to Dashboard</button>
-        <h2>Investigation: {caseData.target_transaction}</h2>
-        <span className={`case-status-badge ${caseData.status === "REVIEWED" ? "status-reviewed" : "status-pending"}`}>
-          {caseData.status}
-        </span>
+      <div className="investigation-header" style={{ justifyContent: "space-between", alignItems: "flex-end", paddingBottom: "var(--space-2)" }}>
+        <div>
+          <button className="btn-back" onClick={() => navigate("/")} style={{ marginBottom: "var(--space-2)" }}>&larr; Back to Dashboard</button>
+          <h2 style={{ fontSize: "var(--text-2xl)", color: "var(--color-text-primary)", margin: "0 0 var(--space-2) 0" }}>
+            Investigation: {caseData.target_transaction}
+          </h2>
+          <span className={`case-status-badge ${caseData.status === "REVIEWED" ? "status-reviewed" : "status-pending"}`}>
+            {caseData.status}
+          </span>
+        </div>
+        <button 
+          className="btn-open" 
+          style={{ padding: "var(--space-3) var(--space-6)" }}
+          onClick={async () => {
+            try {
+              const res = await generateReport(analysisId!);
+              navigate(`/reports/${res.report_id}`);
+            } catch (err) {
+              alert("Failed to generate report.");
+              console.error(err);
+            }
+          }}
+        >
+          Generate Investigation Report
+        </button>
       </div>
 
       <div className="investigation-content">

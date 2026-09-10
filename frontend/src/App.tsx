@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Investigation from "./pages/Investigation";
+import Report from "./pages/Report";
 
 function Header() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/investigation/:analysisId" element={<Investigation />} />
+          <Route path="/reports/:reportId" element={<Report />} />
         </Routes>
       </div>
     </BrowserRouter>
