@@ -218,8 +218,8 @@ __marimo__/
 .streamlit/secrets.toml
 
 # dataset
-/ml/data/raw/
-/ml/output
+/ml/data
+/ml/outputs
 
 # logging
 /research_log
