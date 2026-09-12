@@ -192,6 +192,134 @@ def evaluate(name, y_true, probabilities, threshold):
     print("confusion matrix:")
     print(confusion_matrix(y_true, predictions))
 
+def evaluate_ranking(data, probabilities):
+    """
+    모델의 예측 확률을 조사 우선순위로 사용하여 평가한다.
+
+    data:
+        txhash와 label이 포함된 원본 평가 DataFrame
+
+    probabilities:
+        각 행이 자금세탁 송금일 확률
+    """
+
+    ranked = data[["txhash", "fromaddress", "toaddress", "amount", "label"]].copy()
+    ranked["risk_score"] = probabilities
+
+    # 위험 점수가 높은 송금부터 정렬
+    ranked = ranked.sort_values(
+        "risk_score",
+        ascending=False,
+    ).reset_index(drop=True)
+
+    total_rows = len(ranked)
+    total_positive = int(ranked["label"].sum())
+    positive_ratio = ranked["label"].mean()
+
+    print("\n=== 전체 조사 순위 평가 ===")
+    print(f"전체 송금 수: {total_rows}")
+    print(f"실제 자금세탁 송금 수: {total_positive}")
+    print(f"자금세탁 기본 비율: {positive_ratio:.4f}")
+
+    # 조사할 수 있는 송금 개수가 고정된 경우
+    for k in [100, 500, 1000, 1500]:
+        if k > total_rows:
+            continue
+
+        selected = ranked.head(k)
+
+        detected = int(selected["label"].sum())
+        precision_at_k = detected / k
+        recall_at_k = detected / total_positive
+        lift = precision_at_k / positive_ratio
+
+        print(f"\nTop-{k}")
+        print(f"  발견한 자금세탁 송금: {detected}")
+        print(f"  Precision@{k}: {precision_at_k:.4f}")
+        print(f"  Recall@{k}: {recall_at_k:.4f}")
+        print(f"  Lift@{k}: {lift:.2f}배")
+
+    # 전체 데이터 중 일정 비율만 조사하는 경우
+    for percentage in [0.01, 0.05, 0.10]:
+        k = max(1, int(np.ceil(total_rows * percentage)))
+        selected = ranked.head(k)
+
+        detected = int(selected["label"].sum())
+        precision = detected / k
+        recall = detected / total_positive
+        lift = precision / positive_ratio
+
+        print(f"\n상위 {percentage:.0%} 조사")
+        print(f"  조사 송금 수: {k}")
+        print(f"  발견한 자금세탁 송금: {detected}")
+        print(f"  Precision: {precision:.4f}")
+        print(f"  Recall: {recall:.4f}")
+        print(f"  Lift: {lift:.2f}배")
+
+    return ranked
+
+def evaluate_within_transaction_ranking(data, probabilities):
+    """
+    같은 txhash 내부에서 실제 자금세탁 송금을
+    상위 몇 번째로 배치했는지 평가한다.
+    """
+
+    ranked = data[["txhash", "fromaddress", "toaddress", "amount", "label"]].copy()
+    ranked["risk_score"] = probabilities
+
+    # 정상 출력과 자금세탁 출력이 모두 존재하는 거래만 선택
+    label_count = ranked.groupby("txhash")["label"].nunique()
+    mixed_txhashes = label_count[label_count > 1].index
+
+    mixed = ranked[ranked["txhash"].isin(mixed_txhashes)].copy()
+
+    print("\n=== 거래 내부 위치 추적 평가 ===")
+    print(f"평가 대상 혼합 거래 수: {len(mixed_txhashes)}")
+
+    hit_counts = {
+        1: 0,
+        3: 0,
+        5: 0,
+    }
+
+    reciprocal_ranks = []
+
+    for _, group in mixed.groupby("txhash"):
+        group = group.sort_values(
+            "risk_score",
+            ascending=False,
+        ).reset_index(drop=True)
+
+        # 첫 번째 실제 자금세탁 송금의 순위
+        positive_positions = np.flatnonzero(
+            group["label"].to_numpy() == 1
+        )
+
+        if len(positive_positions) == 0:
+            continue
+
+        first_positive_rank = int(positive_positions[0]) + 1
+        reciprocal_ranks.append(1 / first_positive_rank)
+
+        for k in hit_counts:
+            if first_positive_rank <= k:
+                hit_counts[k] += 1
+
+    evaluated_transactions = len(reciprocal_ranks)
+
+    if evaluated_transactions == 0:
+        print("평가 가능한 혼합 거래가 없습니다.")
+        return
+
+    for k, hits in hit_counts.items():
+        hit_rate = hits / evaluated_transactions
+
+        print(f"Hit@{k}: {hit_rate:.4f} "
+              f"({hits}/{evaluated_transactions})")
+
+    mean_reciprocal_rank = np.mean(reciprocal_ranks)
+    print(f"MRR: {mean_reciprocal_rank:.4f}")
+
 
 def main():
     df = load_data()
@@ -274,6 +402,32 @@ def main():
 
     print("\n=== 특징 중요도 ===")
     print(importance)
+
+
+    ranked_test = evaluate_ranking(
+        test,
+        test_probabilities,
+    )
+
+    evaluate_within_transaction_ranking(
+        test,
+        test_probabilities,
+    )
+
+    OUTPUT_DIR = PROJECT_DIR / "ml" / "outputs"
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    ranked_test["rank"] = np.arange(1, len(ranked_test) + 1)
+
+    ranked_test.head(1000).to_csv(
+        OUTPUT_DIR / "rf_bybit_top1000.csv",
+        index=False,
+    )
+
+    print(
+        "\n조사 우선순위 저장:",
+        OUTPUT_DIR / "rf_bybit_top1000.csv",
+    )
 
 
 if __name__ == "__main__":
