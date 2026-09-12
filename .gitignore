@@ -219,6 +219,7 @@ __marimo__/
 
 # dataset
 /ml/data/raw/
+/ml/output
 
 # logging
 /research_log

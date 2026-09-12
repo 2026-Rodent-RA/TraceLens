@@ -3,12 +3,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    average_precision_score,
-    confusion_matrix,
-    f1_score,
-    precision_score,
-    recall_score,
+from evaluation import (
+    evaluate_classification,
+    evaluate_ranking,
+    evaluate_transaction_ranking,
+    find_best_threshold,
 )
 
 
@@ -140,187 +139,6 @@ def assign_split(df):
     return df
 
 
-def find_best_threshold(y_true, probabilities):
-    thresholds = np.arange(0.05, 0.96, 0.01)
-
-    results = []
-
-    for threshold in thresholds:
-        predictions = (
-            probabilities >= threshold
-        ).astype(int)
-
-        score = f1_score(
-            y_true,
-            predictions,
-            zero_division=0,
-        )
-
-        results.append((threshold, score))
-
-    return max(
-        results,
-        key=lambda item: item[1],
-    )
-
-
-def evaluate(name, y_true, probabilities, threshold):
-    predictions = (
-        probabilities >= threshold
-    ).astype(int)
-
-    print(f"\n=== {name} ===")
-    print(f"threshold: {threshold:.2f}")
-
-    print(
-        "precision:",
-        f"{precision_score(y_true, predictions, zero_division=0):.4f}",
-    )
-    print(
-        "recall:",
-        f"{recall_score(y_true, predictions, zero_division=0):.4f}",
-    )
-    print(
-        "f1:",
-        f"{f1_score(y_true, predictions, zero_division=0):.4f}",
-    )
-    print(
-        "PR-AUC:",
-        f"{average_precision_score(y_true, probabilities):.4f}",
-    )
-
-    print("confusion matrix:")
-    print(confusion_matrix(y_true, predictions))
-
-def evaluate_ranking(data, probabilities):
-    """
-    모델의 예측 확률을 조사 우선순위로 사용하여 평가한다.
-
-    data:
-        txhash와 label이 포함된 원본 평가 DataFrame
-
-    probabilities:
-        각 행이 자금세탁 송금일 확률
-    """
-
-    ranked = data[["txhash", "fromaddress", "toaddress", "amount", "label"]].copy()
-    ranked["risk_score"] = probabilities
-
-    # 위험 점수가 높은 송금부터 정렬
-    ranked = ranked.sort_values(
-        "risk_score",
-        ascending=False,
-    ).reset_index(drop=True)
-
-    total_rows = len(ranked)
-    total_positive = int(ranked["label"].sum())
-    positive_ratio = ranked["label"].mean()
-
-    print("\n=== 전체 조사 순위 평가 ===")
-    print(f"전체 송금 수: {total_rows}")
-    print(f"실제 자금세탁 송금 수: {total_positive}")
-    print(f"자금세탁 기본 비율: {positive_ratio:.4f}")
-
-    # 조사할 수 있는 송금 개수가 고정된 경우
-    for k in [100, 500, 1000, 1500]:
-        if k > total_rows:
-            continue
-
-        selected = ranked.head(k)
-
-        detected = int(selected["label"].sum())
-        precision_at_k = detected / k
-        recall_at_k = detected / total_positive
-        lift = precision_at_k / positive_ratio
-
-        print(f"\nTop-{k}")
-        print(f"  발견한 자금세탁 송금: {detected}")
-        print(f"  Precision@{k}: {precision_at_k:.4f}")
-        print(f"  Recall@{k}: {recall_at_k:.4f}")
-        print(f"  Lift@{k}: {lift:.2f}배")
-
-    # 전체 데이터 중 일정 비율만 조사하는 경우
-    for percentage in [0.01, 0.05, 0.10]:
-        k = max(1, int(np.ceil(total_rows * percentage)))
-        selected = ranked.head(k)
-
-        detected = int(selected["label"].sum())
-        precision = detected / k
-        recall = detected / total_positive
-        lift = precision / positive_ratio
-
-        print(f"\n상위 {percentage:.0%} 조사")
-        print(f"  조사 송금 수: {k}")
-        print(f"  발견한 자금세탁 송금: {detected}")
-        print(f"  Precision: {precision:.4f}")
-        print(f"  Recall: {recall:.4f}")
-        print(f"  Lift: {lift:.2f}배")
-
-    return ranked
-
-def evaluate_within_transaction_ranking(data, probabilities):
-    """
-    같은 txhash 내부에서 실제 자금세탁 송금을
-    상위 몇 번째로 배치했는지 평가한다.
-    """
-
-    ranked = data[["txhash", "fromaddress", "toaddress", "amount", "label"]].copy()
-    ranked["risk_score"] = probabilities
-
-    # 정상 출력과 자금세탁 출력이 모두 존재하는 거래만 선택
-    label_count = ranked.groupby("txhash")["label"].nunique()
-    mixed_txhashes = label_count[label_count > 1].index
-
-    mixed = ranked[ranked["txhash"].isin(mixed_txhashes)].copy()
-
-    print("\n=== 거래 내부 위치 추적 평가 ===")
-    print(f"평가 대상 혼합 거래 수: {len(mixed_txhashes)}")
-
-    hit_counts = {
-        1: 0,
-        3: 0,
-        5: 0,
-    }
-
-    reciprocal_ranks = []
-
-    for _, group in mixed.groupby("txhash"):
-        group = group.sort_values(
-            "risk_score",
-            ascending=False,
-        ).reset_index(drop=True)
-
-        # 첫 번째 실제 자금세탁 송금의 순위
-        positive_positions = np.flatnonzero(
-            group["label"].to_numpy() == 1
-        )
-
-        if len(positive_positions) == 0:
-            continue
-
-        first_positive_rank = int(positive_positions[0]) + 1
-        reciprocal_ranks.append(1 / first_positive_rank)
-
-        for k in hit_counts:
-            if first_positive_rank <= k:
-                hit_counts[k] += 1
-
-    evaluated_transactions = len(reciprocal_ranks)
-
-    if evaluated_transactions == 0:
-        print("평가 가능한 혼합 거래가 없습니다.")
-        return
-
-    for k, hits in hit_counts.items():
-        hit_rate = hits / evaluated_transactions
-
-        print(f"Hit@{k}: {hit_rate:.4f} "
-              f"({hits}/{evaluated_transactions})")
-
-    mean_reciprocal_rank = np.mean(reciprocal_ranks)
-    print(f"MRR: {mean_reciprocal_rank:.4f}")
-
-
 def main():
     df = load_data()
     df = build_features(df)
@@ -381,14 +199,14 @@ def main():
         X_test
     )[:, 1]
 
-    evaluate(
+    evaluate_classification(
         "Validation",
         y_validation,
         validation_probabilities,
         best_threshold,
     )
 
-    evaluate(
+    evaluate_classification(
         "Test",
         y_test,
         test_probabilities,
@@ -409,7 +227,7 @@ def main():
         test_probabilities,
     )
 
-    evaluate_within_transaction_ranking(
+    evaluate_transaction_ranking(
         test,
         test_probabilities,
     )
