@@ -23,6 +23,7 @@ from ml.training.evaluation import (
 )
 
 
+USE_GRAPH_MESSAGES = True
 GRAPH_PATH = (
     PROJECT_DIR
     / "ml"
@@ -31,13 +32,18 @@ GRAPH_PATH = (
     / "bybit_graph.pt"
 )
 
-MODEL_PATH = (
+model_filename = (
+    "gnn_bybit.pt"
+    if USE_GRAPH_MESSAGES
+    else "no_message_bybit.pt"
+)
+
+model_path = (
     PROJECT_DIR
     / "ml"
     / "outputs"
-    / "gnn_bybit.pt"
+    / model_filename
 )
-
 
 def select_edges(graph, split_id):
     mask = graph.split_id == split_id
@@ -99,18 +105,33 @@ def main():
         select_edges(graph, 2)
     )
 
-    # 검증 시점에는 Train과 Validation 간선을 관찰 가능
-    validation_message_edges = graph.edge_index[
-        :,
-        graph.split_id <= 1,
-    ]
+    empty_edges = torch.empty(
+        (2, 0),
+        dtype=torch.long,
+        device=device,
+    )
 
-    # 테스트 시점에는 이전 간선을 모두 관찰 가능
-    test_message_edges = graph.edge_index[
-        :,
-        graph.split_id <= 2,
-    ]
+    if USE_GRAPH_MESSAGES:
+        train_message_edges = train_edges
 
+        validation_message_edges = graph.edge_index[
+            :,
+            graph.split_id <= 1,
+        ]
+
+        test_message_edges = graph.edge_index[
+            :,
+            graph.split_id <= 2,
+        ]
+
+        experiment_name = "GNN"
+    else:
+        train_message_edges = empty_edges
+        validation_message_edges = empty_edges
+        test_message_edges = empty_edges
+
+        experiment_name = "No Message Passing"
+        
     model = GraphSAGEEdgeClassifier(
         node_feature_dim=graph.x_train.shape[1],
         edge_feature_dim=graph.edge_attr.shape[1],
@@ -143,6 +164,7 @@ def main():
     print("=== GNN 학습 시작 ===")
     print(f"device: {device}")
     print(f"train edges: {len(train_labels)}")
+    print(f"experiment: {experiment_name}")
 
     for epoch in range(1, 51):
         model.train()
@@ -150,7 +172,7 @@ def main():
 
         train_logits = model(
             graph.x_train,
-            train_edges,
+            train_message_edges,
             train_edges,
             train_features,
         )
@@ -245,14 +267,14 @@ def main():
     print(f"검증 F1: {validation_f1:.4f}")
 
     evaluate_classification(
-        "GNN Validation",
+        f"{experiment_name} Validation",
         validation_labels_np,
         validation_probabilities,
         best_threshold,
     )
 
     evaluate_classification(
-        "GNN Test",
+        f"{experiment_name} Test",
         test_labels_np,
         test_probabilities,
         best_threshold,
@@ -270,7 +292,7 @@ def main():
         test_probabilities,
     )
 
-    MODEL_PATH.parent.mkdir(
+    model_path.parent.mkdir(
         parents=True,
         exist_ok=True,
     )
@@ -282,15 +304,10 @@ def main():
             "feature_std": feature_std,
             "threshold": best_threshold,
         },
-        MODEL_PATH,
+        model_path,
     )
 
-    ranked_test.head(1000).to_csv(
-        MODEL_PATH.parent / "gnn_bybit_top1000.csv",
-        index=False,
-    )
-
-    print(f"\n모델 저장: {MODEL_PATH}")
+    print(f"\n모델 저장: {model_path}")
 
 
 if __name__ == "__main__":
