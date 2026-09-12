@@ -84,6 +84,21 @@ export default function Report() {
     }
   };
 
+  const handleDownload = () => {
+    if (!report) return;
+    const jsonStr = JSON.stringify(report, null, 2);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `tracelens-report-${report.report_id}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   if (loading) return <div className="loading-container">Loading Report...</div>;
   if (error || !report) return <div className="error-container">Failed to load report: {error}</div>;
 
@@ -93,12 +108,24 @@ export default function Report() {
 
   return (
     <main className="main-content">
-      <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+      <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "var(--space-4)" }}>
         <div>
           <button className="btn-back" onClick={() => navigate(-1)} style={{ marginBottom: "var(--space-4)" }}>&larr; Back</button>
           <h1 className="page-title">Investigation Report</h1>
           <p className="page-subtitle">ID: {report.report_id} | Generated: {new Date(report.generated_at).toLocaleString()}</p>
         </div>
+        <button 
+          className="btn-secondary" 
+          onClick={handleDownload}
+          style={{ gap: "var(--space-2)" }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export JSON
+        </button>
       </div>
 
       {/* Blockchain Proof Section */}
@@ -120,12 +147,12 @@ export default function Report() {
             <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
               {isIssued ? (
                 isRevoked ? (
-                  <span className="badge" style={{ background: "var(--color-risk-high)", color: "white" }}>REVOKED</span>
+                  <span className="badge-status revoked">REVOKED</span>
                 ) : (
-                  <span className="badge" style={{ background: "var(--color-risk-low)", color: "var(--color-bg-base)" }}>ACTIVE</span>
+                  <span className="badge-status active">ACTIVE</span>
                 )
               ) : (
-                <span className="badge" style={{ background: "var(--color-bg-surface)", color: "var(--color-text-muted)", border: "1px solid var(--color-border)" }}>NOT ISSUED</span>
+                <span className="badge-status not-issued">NOT ISSUED</span>
               )}
               
               {attestation?.issuer && (
@@ -136,7 +163,7 @@ export default function Report() {
             </div>
           </div>
           
-          <div style={{ display: "flex", gap: "var(--space-2)" }}>
+          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
             {!isIssued && (
               <button className="btn-primary" onClick={handleIssue} disabled={actionLoading}>
                 {actionLoading ? "Processing..." : "Issue on Blockchain"}

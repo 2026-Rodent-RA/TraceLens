@@ -105,3 +105,17 @@ export async function revokeReport(reportId: string): Promise<any> {
   }
   return res.json();
 }
+
+/** 외부 JSON Report 파일 검증 */
+export async function verifyExternalReport(reportData: any): Promise<any> {
+  const res = await fetch(`${BASE_URL}/api/reports/verify/external`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(reportData),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`API Error [${res.status}] POST /api/reports/verify/external: ${text}`);
+  }
+  return res.json();
+}
