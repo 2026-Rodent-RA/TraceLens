@@ -70,6 +70,8 @@ def standardize_edge_features(graph):
 
 
 def main():
+    torch.manual_seed(42)
+    np.random.seed(42)
     device = torch.device("cpu")
 
     # 우리가 직접 생성한 파일이므로 weights_only=False 사용
@@ -110,7 +112,7 @@ def main():
     ]
 
     model = GraphSAGEEdgeClassifier(
-        node_feature_dim=graph.x.shape[1],
+        node_feature_dim=graph.x_train.shape[1],
         edge_feature_dim=graph.edge_attr.shape[1],
         hidden_dim=32,
         dropout=0.2,
@@ -147,7 +149,7 @@ def main():
         optimizer.zero_grad()
 
         train_logits = model(
-            graph.x,
+            graph.x_train,
             train_edges,
             train_edges,
             train_features,
@@ -168,7 +170,7 @@ def main():
 
         with torch.no_grad():
             validation_logits = model(
-                graph.x,
+                graph.x_validation,
                 validation_message_edges,
                 validation_edges,
                 validation_features,
@@ -208,14 +210,14 @@ def main():
 
     with torch.no_grad():
         validation_logits = model(
-            graph.x,
+            graph.x_validation,
             validation_message_edges,
             validation_edges,
             validation_features,
         )
 
         test_logits = model(
-            graph.x,
+            graph.x_test,
             test_message_edges,
             test_edges,
             test_features,

@@ -101,15 +101,171 @@ def build_graph():
         num_nodes=len(address_to_id),
     )
 
-    # 각 노드는 우선 1이라는 단순한 특징을 가짐
-    graph.x = torch.ones(
-        (graph.num_nodes, 1),
+    train_history = train
+
+    validation_history = pd.concat(
+        [train, validation],
+        ignore_index=True,
+    )
+
+    test_history = pd.concat(
+        [train, validation, test],
+        ignore_index=True,
+    )
+
+    x_train_raw = build_node_features(
+        train_history,
+        address_to_id,
+    )
+
+    x_validation_raw = build_node_features(
+        validation_history,
+        address_to_id,
+    )
+
+    x_test_raw = build_node_features(
+        test_history,
+        address_to_id,
+    )
+
+    # Train 기간에 실제로 등장한 주소로 정규화 기준 계산
+    active_train_nodes = (
+        x_train_raw[:, 0]
+        + x_train_raw[:, 3]
+    ) > 0
+
+    feature_mean = x_train_raw[
+        active_train_nodes
+    ].mean(
+        axis=0,
+        keepdims=True,
+    )
+
+    feature_std = x_train_raw[
+        active_train_nodes
+    ].std(
+        axis=0,
+        keepdims=True,
+    )
+
+    feature_std[
+        feature_std < 1e-6
+    ] = 1.0
+
+    graph.x_train = torch.tensor(
+        (x_train_raw - feature_mean) / feature_std,
+        dtype=torch.float32,
+    )
+
+    graph.x_validation = torch.tensor(
+        (x_validation_raw - feature_mean) / feature_std,
+        dtype=torch.float32,
+    )
+
+    graph.x_test = torch.tensor(
+        (x_test_raw - feature_mean) / feature_std,
+        dtype=torch.float32,
+    )
+
+    graph.node_feature_mean = torch.tensor(
+        feature_mean,
+        dtype=torch.float32,
+    )
+
+    graph.node_feature_std = torch.tensor(
+        feature_std,
         dtype=torch.float32,
     )
 
     graph.address_to_id = address_to_id
 
     return graph
+
+def build_node_features(
+    observed_edges,
+    address_to_id,
+):
+    num_nodes = len(address_to_id)
+
+    # 총 8개의 주소 특징
+    features = np.zeros(
+        (num_nodes, 8),
+        dtype=np.float32,
+    )
+
+    outgoing = observed_edges.groupby(
+        "fromaddress"
+    ).agg(
+        out_count=("txhash", "size"),
+        out_amount=("amount", "sum"),
+        unique_receivers=("toaddress", "nunique"),
+    )
+
+    incoming = observed_edges.groupby(
+        "toaddress"
+    ).agg(
+        in_count=("txhash", "size"),
+        in_amount=("amount", "sum"),
+        unique_senders=("fromaddress", "nunique"),
+    )
+
+    out_ids = np.array([
+        address_to_id[address]
+        for address in outgoing.index
+    ])
+
+    in_ids = np.array([
+        address_to_id[address]
+        for address in incoming.index
+    ])
+
+    # 송금 행동
+    features[out_ids, 0] = np.log1p(
+        outgoing["out_count"]
+    )
+
+    features[out_ids, 1] = np.log1p(
+        outgoing["out_amount"]
+    )
+
+    features[out_ids, 2] = np.log1p(
+        outgoing["unique_receivers"]
+    )
+
+    # 수신 행동
+    features[in_ids, 3] = np.log1p(
+        incoming["in_count"]
+    )
+
+    features[in_ids, 4] = np.log1p(
+        incoming["in_amount"]
+    )
+
+    features[in_ids, 5] = np.log1p(
+        incoming["unique_senders"]
+    )
+
+    out_amount = np.expm1(features[:, 1])
+    in_amount = np.expm1(features[:, 4])
+
+    out_count = np.expm1(features[:, 0])
+    in_count = np.expm1(features[:, 3])
+
+    # 양수면 출금액이 더 많고, 음수면 입금액이 더 많음
+    features[:, 6] = (
+        out_amount - in_amount
+    ) / (
+        out_amount + in_amount + 1e-6
+    )
+
+    # 양수면 출금 횟수가 더 많고, 음수면 입금 횟수가 더 많음
+    features[:, 7] = (
+        out_count - in_count
+    ) / (
+        out_count + in_count + 1e-6
+    )
+
+    return features
 
 
 def main():
@@ -128,7 +284,21 @@ def main():
     print("=== Bybit 주소 그래프 ===")
     print(f"노드 수: {graph.num_nodes}")
     print(f"간선 수: {graph.num_edges}")
-    print(f"노드 특징 크기: {graph.x.shape}")
+    print(
+        f"Train 노드 특징 크기: "
+        f"{graph.x_train.shape}"
+    )
+
+    print(
+        f"Validation 노드 특징 크기: "
+        f"{graph.x_validation.shape}"
+    )
+
+    print(
+        f"Test 노드 특징 크기: "
+        f"{graph.x_test.shape}"
+    )
+    
     print(f"간선 특징 크기: {graph.edge_attr.shape}")
 
     print(
