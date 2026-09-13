@@ -1,61 +1,70 @@
-// frontend/src/App.tsx
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Investigation from "./pages/Investigation";
 import Report from "./pages/Report";
 import Verify from "./pages/Verify";
 import { useApp } from "./i18n/context";
+import { DEMO_MODE } from "./services/api";
+
+function BrandMark() {
+  return (
+    <svg viewBox="0 0 28 28" aria-hidden="true">
+      <circle cx="8" cy="8" r="3" />
+      <circle cx="20" cy="7" r="3" />
+      <circle cx="14" cy="20" r="3" />
+      <path d="M10.6 9.5 12.8 17M17.6 9.1l-2.2 8.2M10.9 8.2l6.1-.7" />
+    </svg>
+  );
+}
 
 function Header() {
   const { lang, setLang, theme, setTheme, t } = useApp();
 
   return (
     <header className="app-header">
-      <div className="header-inner" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
-          <Link to="/" className="logo" id="logo-link">
-            <div className="logo-icon" aria-hidden="true">TL</div>
+      <div className="header-inner">
+        <NavLink to="/" className="logo" id="logo-link" aria-label="TraceLens home">
+          <span className="logo-icon"><BrandMark /></span>
+          <span className="brand-copy">
             <span className="logo-text">TraceLens</span>
-          </Link>
-          <span className="logo-subtitle">AI-assisted On-chain Investigation</span>
-        </div>
-        <nav style={{ display: "flex", gap: "var(--space-4)", alignItems: "center" }}>
-          <Link to="/" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 500 }}>{t('nav.dashboard')}</Link>
-          <Link to="/verify" style={{ color: "var(--color-accent-blue)", textDecoration: "none", fontWeight: 500 }}>{t('nav.verify')}</Link>
-          
-          <div style={{ width: "1px", height: "24px", background: "var(--color-border)", margin: "0 var(--space-2)" }}></div>
-          
-          <select 
-            value={lang} 
-            onChange={(e) => setLang(e.target.value as any)}
-            style={{ 
-              background: "transparent", 
-              border: "1px solid var(--color-border)", 
-              color: "var(--color-text-primary)",
-              padding: "var(--space-1) var(--space-2)",
-              borderRadius: "var(--radius-sm)",
-              fontSize: "var(--text-sm)"
-            }}
-          >
-            <option value="ko">한국어</option>
-            <option value="en">English</option>
-          </select>
-          
-          <button 
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            style={{
-              background: "transparent", 
-              border: "1px solid var(--color-border)", 
-              color: "var(--color-text-primary)",
-              padding: "var(--space-1) var(--space-2)",
-              borderRadius: "var(--radius-sm)",
-              cursor: "pointer",
-              fontSize: "var(--text-sm)"
-            }}
-          >
-            {theme === 'light' ? t('theme.dark') : t('theme.light')}
-          </button>
+            <span className="logo-subtitle">On-chain Investigation</span>
+          </span>
+        </NavLink>
+
+        <nav className="main-nav" aria-label="Primary navigation">
+          <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 3h5v5H3zM12 3h5v5h-5zM3 12h5v5H3zM12 12h5v5h-5z" /></svg>
+            {t("nav.dashboard")}
+          </NavLink>
+          <NavLink to="/verify" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.4 16 5v4.1c0 4-2.5 6.9-6 8.5-3.5-1.6-6-4.5-6-8.5V5l6-2.6Z" /><path d="m7.2 9.8 1.8 1.8 3.8-4" /></svg>
+            {t("nav.verify")}
+          </NavLink>
         </nav>
+
+        <div className="header-actions">
+          {DEMO_MODE && <span className="environment-badge"><i /> Demo</span>}
+          <label className="language-control" aria-label="Language">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" /><path d="M2.5 10h15M10 2.5c2 2.1 3 4.6 3 7.5s-1 5.4-3 7.5c-2-2.1-3-4.6-3-7.5s1-5.4 3-7.5Z" /></svg>
+            <select value={lang} onChange={(event) => setLang(event.target.value as "ko" | "en")}>
+              <option value="ko">KO</option>
+              <option value="en">EN</option>
+            </select>
+          </label>
+          <button
+            className="icon-button"
+            type="button"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            aria-label={theme === "light" ? t("theme.dark") : t("theme.light")}
+            title={theme === "light" ? t("theme.dark") : t("theme.light")}
+          >
+            {theme === "light" ? (
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16.6 12.7A7 7 0 0 1 7.3 3.4 7 7 0 1 0 16.6 12.7Z" /></svg>
+            ) : (
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2" /><path d="M10 1.7v2M10 16.3v2M18.3 10h-2M3.7 10h-2M15.9 4.1l-1.4 1.4M5.5 14.5l-1.4 1.4M15.9 15.9l-1.4-1.4M5.5 5.5 4.1 4.1" /></svg>
+            )}
+          </button>
+        </div>
       </div>
     </header>
   );

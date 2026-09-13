@@ -1,183 +1,67 @@
-// frontend/src/pages/Verify.tsx
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { verifyReport } from "../services/api";
 import { useApp } from "../i18n/context";
 
 export default function Verify() {
   const { t } = useApp();
   const [fileData, setFileData] = useState<any>(null);
+  const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
   const [verification, setVerification] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const readFile = (file?: File) => {
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
         const json = JSON.parse(event.target?.result as string);
-        if (!json.report_id || !json.content) {
-          throw new Error("Invalid TraceLens Report JSON format.");
-        }
-        setFileData(json);
-        setVerification(null);
-        setError(null);
-      } catch (err: any) {
-        setError(err.message || "Failed to parse JSON file.");
-        setFileData(null);
-      }
+        if (!json.report_id || !json.content) throw new Error("Invalid TraceLens Report JSON format.");
+        setFileData(json); setFileName(file.name); setVerification(null); setError(null);
+      } catch (err) { setError(err instanceof Error ? err.message : "Failed to parse JSON file."); setFileData(null); setFileName(""); }
     };
     reader.readAsText(file);
-    
-    // Reset input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   const handleVerify = async () => {
     if (!fileData) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await verifyReport(fileData);
-      setVerification(res);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true); setError(null);
+    try { setVerification(await verifyReport(fileData)); }
+    catch (err) { setError(err instanceof Error ? err.message : "Verification failed"); }
+    finally { setLoading(false); }
   };
 
-  const getVerificationColor = (status: string) => {
-    if (status === "VERIFIED") return "var(--color-risk-low)";
-    if (status === "REVOKED") return "orange";
-    return "var(--color-risk-high)";
-  };
+  const tone = verification?.status === "VERIFIED" ? "success" : verification?.status === "REVOKED" ? "warning" : "danger";
+  const shortHash = (value?: string) => value && value.length > 30 ? `${value.slice(0, 16)}…${value.slice(-12)}` : value;
 
   return (
-    <main className="main-content">
-      <div className="page-header" style={{ marginBottom: "var(--space-6)" }}>
-        <h1 className="page-title">{t("verify.title")}</h1>
-        <p className="page-subtitle">{t("verify.subtitle")}</p>
-      </div>
+    <main className="main-content verify-page">
+      <section className="verify-hero"><span className="hero-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3 23 7v6.2c0 6-3.8 10.3-9 12.7-5.2-2.4-9-6.7-9-12.7V7l9-4Z" /><path d="m10 14 2.6 2.6 5.6-6" /></svg></span><span className="eyebrow">REPORT INTEGRITY</span><h1 className="page-title">{t("verify.title")}</h1><p className="page-subtitle">{t("verify.subtitle")}</p></section>
 
-      <div style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        gap: "var(--space-6)",
-        maxWidth: "800px",
-        margin: "0 auto"
-      }}>
-        {/* File Upload Section */}
-        <div style={{
-          border: "2px dashed var(--color-border)",
-          borderRadius: "var(--radius-lg)",
-          padding: "var(--space-8)",
-          textAlign: "center",
-          background: "var(--color-bg-elevated)",
-          cursor: "pointer",
-          transition: "all 0.2s"
-        }} onClick={() => fileInputRef.current?.click()}>
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: "var(--space-4)" }}>
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          <h3 style={{ marginBottom: "var(--space-2)" }}>{t("verify.upload")}</h3>
-          <p style={{ color: "var(--color-text-muted)", fontSize: "var(--text-sm)" }}>{t("verify.upload_desc")}</p>
-          <input 
-            type="file" 
-            accept=".json" 
-            ref={fileInputRef} 
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-          />
-        </div>
+      <div className="verify-workspace">
+        <section
+          className={`upload-zone ${dragging ? "dragging" : ""} ${fileData ? "has-file" : ""}`}
+          role="button" tabIndex={0}
+          onClick={() => fileInputRef.current?.click()}
+          onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click(); }}
+          onDragOver={(event) => { event.preventDefault(); setDragging(true); }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(event) => { event.preventDefault(); setDragging(false); readFile(event.dataTransfer.files[0]); }}
+        >
+          <span className="upload-icon"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 18v5h18v-5M14 20V5M8.5 10.5 14 5l5.5 5.5" /></svg></span>
+          <h2>{fileData ? fileName : t("verify.upload")}</h2>
+          <p>{fileData ? t("verify.replace_desc") : t("verify.upload_desc")}</p>
+          <span className="file-type">JSON · MAX 5 MB</span>
+          <input type="file" accept=".json,application/json" ref={fileInputRef} onChange={(event) => { readFile(event.target.files?.[0]); event.target.value = ""; }} />
+        </section>
 
-        {error && (
-          <div className="error-container">
-            {error}
-          </div>
-        )}
+        {error && <div className="inline-alert danger">{error}<button type="button" onClick={() => setError(null)}>×</button></div>}
 
-        {/* File Preview Section */}
-        {fileData && (
-          <div className="panel-section" style={{ background: "var(--color-bg-elevated)" }}>
-            <h3 style={{ borderBottom: "1px solid var(--color-border)", paddingBottom: "var(--space-2)", marginBottom: "var(--space-4)" }}>
-              {t("verify.preview")}
-            </h3>
-            <table className="report-table" style={{ width: "100%", textAlign: "left", fontSize: "var(--text-sm)", marginBottom: "var(--space-6)" }}>
-              <tbody>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("report.analysis_id")}</th><td>{fileData.report_id}</td></tr>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("report.target_tx")}</th><td>{fileData.content?.target_transaction}</td></tr>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("dashboard.card.risk")}</th><td>{fileData.content?.prediction_level}</td></tr>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("report.hash_expected")}</th><td style={{ fontFamily: "var(--font-mono)", fontSize: "12px" }}>{fileData.report_hash}</td></tr>
-              </tbody>
-            </table>
+        {fileData && <section className="panel-section file-preview"><header className="panel-header"><div><span className="eyebrow">FILE CONTENT</span><h2>{t("verify.preview")}</h2></div><span className="ready-badge"><i />Ready</span></header><dl className="summary-list"><div><dt>{t("report.analysis_id")}</dt><dd>{fileData.report_id}</dd></div><div><dt>{t("report.target_tx")}</dt><dd><code title={fileData.content?.target_transaction}>{shortHash(fileData.content?.target_transaction)}</code></dd></div><div><dt>{t("dashboard.card.risk")}</dt><dd><span className={`risk-pill risk-${String(fileData.content?.prediction_level ?? "low").toLowerCase()}`}>{fileData.content?.prediction_level}</span></dd></div><div><dt>{t("report.hash_expected")}</dt><dd><code title={fileData.report_hash}>{shortHash(fileData.report_hash)}</code></dd></div></dl><button className="btn-primary verify-action" type="button" onClick={handleVerify} disabled={loading}><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.4 16 5v4.1c0 4-2.5 6.9-6 8.5-3.5-1.6-6-4.5-6-8.5V5l6-2.6Z" /><path d="m7.2 9.8 1.8 1.8 3.8-4" /></svg>{loading ? t("report.processing") : t("verify.verify_btn")}</button></section>}
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <button 
-                className="btn-primary" 
-                style={{ padding: "var(--space-3) var(--space-8)", fontSize: "var(--text-base)" }}
-                onClick={handleVerify}
-                disabled={loading}
-              >
-                {loading ? "Verifying..." : t("verify.verify_btn")}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Verification Result Section */}
-        {verification && (
-          <div style={{
-            background: `color-mix(in srgb, ${getVerificationColor(verification.status)} 10%, transparent)`,
-            border: `1px solid ${getVerificationColor(verification.status)}`,
-            padding: "var(--space-6)",
-            borderRadius: "var(--radius-lg)"
-          }}>
-            <h2 style={{ 
-              color: getVerificationColor(verification.status), 
-              marginBottom: "var(--space-2)",
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)"
-            }}>
-              {verification.status === "VERIFIED" && "✅ "}
-              {verification.status === "REVOKED" && "⚠️ "}
-              {(verification.status === "TAMPERED" || verification.status === "HASH_MISMATCH" || verification.status === "NOT_VERIFIED") && "❌ "}
-              {t("verify.result")} {verification.status}
-            </h2>
-            <p style={{ color: "var(--color-text-primary)", fontSize: "var(--text-base)", marginBottom: "var(--space-4)" }}>
-              {verification.message}
-            </p>
-            
-            <div style={{ background: "var(--color-bg-base)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", fontSize: "var(--text-sm)", fontFamily: "var(--font-mono)" }}>
-              <div style={{ marginBottom: "var(--space-2)" }}>
-                <strong style={{ color: "var(--color-text-secondary)" }}>{t("verify.hash_file")}</strong><br/>
-                {fileData.report_hash}
-              </div>
-              <div style={{ marginBottom: "var(--space-2)" }}>
-                <strong style={{ color: "var(--color-text-secondary)" }}>{t("verify.hash_content")}</strong><br/>
-                <span style={{ color: verification.current_hash === fileData.report_hash ? "var(--color-text-primary)" : "var(--color-risk-high)" }}>
-                  {verification.current_hash}
-                </span>
-              </div>
-              
-              {verification.on_chain_issuer && (
-                <div style={{ marginTop: "var(--space-4)" }}>
-                  <strong style={{ color: "var(--color-text-secondary)" }}>{t("verify.on_chain_issuer")}</strong><br/>
-                  {verification.on_chain_issuer}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
+        {verification && <section className={`verification-result ${tone}`}><span className="verification-result-icon">{tone === "success" ? "✓" : tone === "warning" ? "!" : "×"}</span><div className="verification-result-copy"><span className="eyebrow">{t("verify.result")}</span><h2>{verification.status}</h2><p>{verification.message}</p><div className="hash-compare"><div><span>{t("verify.hash_file")}</span><code>{fileData.report_hash}</code></div><div><span>{t("verify.hash_content")}</span><code>{verification.current_hash}</code></div>{verification.on_chain_issuer && <div><span>{t("verify.on_chain_issuer")}</span><code>{verification.on_chain_issuer}</code></div>}</div></div></section>}
       </div>
     </main>
   );

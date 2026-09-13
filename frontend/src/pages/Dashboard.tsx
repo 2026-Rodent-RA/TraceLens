@@ -1,204 +1,138 @@
-// frontend/src/pages/Dashboard.tsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { CaseSummary } from "../types/analysis";
 import { getCases } from "../services/api";
 import { useApp } from "../i18n/context";
 
-// ─── Risk Level helpers ─────────────────────────────────────────────────────
-
-function riskClass(level: string): string {
-  if (level === "HIGH")   return "risk-high";
-  if (level === "MEDIUM") return "risk-medium";
-  return "risk-low";
+function riskClass(level: string) {
+  return level === "HIGH" ? "risk-high" : level === "MEDIUM" ? "risk-medium" : "risk-low";
 }
 
-function barClass(level: string): string {
-  if (level === "HIGH")   return "high";
-  if (level === "MEDIUM") return "medium";
-  return "low";
+function shortHash(value: string) {
+  return value.length > 22 ? `${value.slice(0, 12)}…${value.slice(-10)}` : value;
 }
 
-// ─── Case Card ──────────────────────────────────────────────────────────────
-
-interface CaseCardProps {
-  caseItem: CaseSummary;
-  index: number;
-}
-
-function CaseCard({ caseItem, index }: CaseCardProps) {
+function CaseCard({ caseItem, index }: { caseItem: CaseSummary; index: number }) {
   const navigate = useNavigate();
   const { t } = useApp();
-  const scorePercent = Math.round(caseItem.prediction_score * 100);
-  const caseNumber = String(index + 1).padStart(3, "0");
-
-  const statusLabel = caseItem.status === "REVIEWED" ? t("dashboard.status.reviewed") : t("dashboard.status.pending");
-  const statusBadgeClass = caseItem.status === "REVIEWED" ? "status-reviewed" : "status-pending";
+  const score = Math.round(caseItem.prediction_score * 100);
+  const reviewed = caseItem.status === "REVIEWED";
 
   return (
-    <article
-      className="case-card"
-      id={`case-card-${caseItem.analysis_id}`}
-      onClick={() => navigate(`/investigation/${caseItem.analysis_id}`)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          navigate(`/investigation/${caseItem.analysis_id}`);
-        }
-      }}
-    >
-      <div className="case-card-header">
-        <span className="case-id">Case #{caseNumber}</span>
-        <span className={`case-status-badge ${statusBadgeClass}`}>
-          {statusLabel}
+    <button type="button" className="case-card" id={`case-card-${caseItem.analysis_id}`} onClick={() => navigate(`/investigation/${caseItem.analysis_id}`)}>
+      <span className="case-card-topline">
+        <span className="case-id">CASE {String(index + 1).padStart(3, "0")}</span>
+        <span className={`case-status-badge ${reviewed ? "status-reviewed" : "status-pending"}`}>
+          <i />{reviewed ? t("dashboard.status.reviewed") : t("dashboard.status.pending")}
         </span>
-      </div>
+      </span>
 
-      <div className="case-target">
-        <div className="case-target-label">{t("dashboard.card.target")}</div>
-        <div className="case-target-value">{caseItem.target_transaction.toUpperCase()}</div>
-      </div>
+      <span className="case-primary">
+        <span className={`score-orb ${riskClass(caseItem.prediction_level)}`}><strong>{score}</strong><small>%</small></span>
+        <span className="case-primary-copy">
+          <span className="case-target-label">{t("dashboard.card.target")}</span>
+          <span className="case-target-value" title={caseItem.target_transaction}>{shortHash(caseItem.target_transaction)}</span>
+          <span className={`risk-pill ${riskClass(caseItem.prediction_level)}`}>{caseItem.prediction_level} RISK</span>
+        </span>
+      </span>
 
-      <div className="case-metrics">
-        <div className="metric">
-          <span className="metric-label">{t("dashboard.card.score")}</span>
-          <span className={`metric-value ${riskClass(caseItem.prediction_level)}`}>
-            {scorePercent}%
-          </span>
-          <div className="score-bar-container">
-            <div
-              className={`score-bar ${barClass(caseItem.prediction_level)}`}
-              style={{ width: `${scorePercent}%` }}
-            />
-          </div>
-        </div>
+      <span className="score-track" aria-label={`${t("dashboard.card.score")} ${score}%`}>
+        <span className={riskClass(caseItem.prediction_level)} style={{ width: `${score}%` }} />
+      </span>
 
-        <div className="metric">
-          <span className="metric-label">{t("dashboard.card.risk")}</span>
-          <span className={`metric-value ${riskClass(caseItem.prediction_level)}`}>
-            {caseItem.prediction_level}
-          </span>
-        </div>
-
-        <div className="metric">
-          <span className="metric-label">{t("dashboard.card.model")}</span>
-          <span className="metric-value" style={{ color: "var(--color-text-secondary)" }}>
-            {caseItem.model_name}
-          </span>
-        </div>
-      </div>
-
-      <div className="case-card-footer">
-        <button className="btn-open" id={`btn-open-${caseItem.analysis_id}`}>
-          {t("dashboard.card.open")}
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 8h10M9 4l4 4-4 4" />
-          </svg>
-        </button>
-      </div>
-    </article>
+      <span className="case-card-footer">
+        <span className="model-chip">
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2.2 15 5.5v7L9 15.8l-6-3.3v-7L9 2.2Z" /><circle cx="9" cy="9" r="2" /></svg>
+          {caseItem.model_name}
+        </span>
+        <span className="open-case">{t("dashboard.card.open")}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg></span>
+      </span>
+    </button>
   );
 }
 
-// ─── Stats Bar ───────────────────────────────────────────────────────────────
-
-interface StatsBarProps {
-  cases: CaseSummary[];
-}
-
-function StatsBar({ cases }: StatsBarProps) {
+function StatsBar({ cases }: { cases: CaseSummary[] }) {
   const { t } = useApp();
-  const total   = cases.length;
-  const high    = cases.filter((c) => c.prediction_level === "HIGH").length;
-  const pending = cases.filter((c) => c.status === "PENDING_REVIEW").length;
+  const total = cases.length;
+  const high = cases.filter((item) => item.prediction_level === "HIGH").length;
+  const pending = cases.filter((item) => item.status === "PENDING_REVIEW").length;
+  const reviewed = total - pending;
+  const stats = [
+    { label: t("dashboard.stats.total"), value: total, tone: "neutral" },
+    { label: t("dashboard.stats.high"), value: high, tone: "danger" },
+    { label: t("dashboard.stats.pending"), value: pending, tone: "warning" },
+    { label: t("dashboard.stats.reviewed"), value: reviewed, tone: "success" },
+  ];
 
   return (
-    <div className="stats-bar" role="region" aria-label="Case statistics">
-      <div className="stat-item">
-        <span className="stat-label">{t("dashboard.stats.total")}</span>
-        <span className="stat-value">{total}</span>
-      </div>
-      <div className="stat-divider" />
-      <div className="stat-item">
-        <span className="stat-label">{t("dashboard.stats.high")}</span>
-        <span className="stat-value" style={{ color: "var(--color-risk-high)" }}>{high}</span>
-      </div>
-      <div className="stat-divider" />
-      <div className="stat-item">
-        <span className="stat-label">{t("dashboard.stats.pending")}</span>
-        <span className="stat-value" style={{ color: "var(--color-warning)" }}>{pending}</span>
-      </div>
-      <div className="stat-divider" />
-      <div className="stat-item">
-        <span className="stat-label">{t("dashboard.stats.source")}</span>
-        <span className="stat-value" style={{ fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>
-          Bybit-BC
-        </span>
-      </div>
-    </div>
+    <section className="stats-grid" aria-label="Case statistics">
+      {stats.map((stat) => (
+        <div className={`stat-card ${stat.tone}`} key={stat.label}>
+          <span className="stat-icon"><i /></span>
+          <span><span className="stat-label">{stat.label}</span><strong className="stat-value">{stat.value}</strong></span>
+        </div>
+      ))}
+    </section>
   );
 }
-
-// ─── Dashboard Page ──────────────────────────────────────────────────────────
 
 export default function Dashboard() {
   const { t } = useApp();
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState<"ALL" | "PENDING_REVIEW" | "REVIEWED">("ALL");
 
   useEffect(() => {
-    getCases()
-      .then(setCases)
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setLoading(false));
+    getCases().then(setCases).catch((err: Error) => setError(err.message)).finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="loading-container" role="status" aria-live="polite">
-        <div className="spinner" aria-hidden="true" />
-        <span>{t("dashboard.loading")}</span>
-      </div>
-    );
-  }
+  const filtered = useMemo(() => cases.filter((item) => {
+    const matchesQuery = `${item.analysis_id} ${item.target_transaction}`.toLowerCase().includes(query.trim().toLowerCase());
+    return matchesQuery && (status === "ALL" || item.status === status);
+  }), [cases, query, status]);
 
-  if (error) {
-    return (
-      <div className="error-container" role="alert">
-        <h3>Failed to load cases</h3>
-        <p>{error}</p>
-        <p style={{ marginTop: "var(--space-2)", fontSize: "var(--text-xs)", color: "var(--color-text-muted)" }}>
-          서버에 연결할 수 없습니다. 서비스 점검 중이거나 네트워크 오류일 수 있습니다.
-        </p>
-      </div>
-    );
-  }
+  if (loading) return <div className="loading-container" role="status"><div className="spinner" /><span>{t("dashboard.loading")}</span></div>;
+  if (error) return <div className="error-container" role="alert"><h3>{t("dashboard.load_error")}</h3><p>{error}</p></div>;
 
   return (
     <main className="main-content" id="dashboard-main">
-      <div className="page-header">
-        <h1 className="page-title">{t("dashboard.title")}</h1>
-        <p className="page-subtitle">
-          {t("dashboard.subtitle")}
-        </p>
-      </div>
+      <section className="dashboard-hero">
+        <div>
+          <span className="eyebrow"><i /> {t("dashboard.eyebrow")}</span>
+          <h1 className="page-title">{t("dashboard.title")}</h1>
+          <p className="page-subtitle">{t("dashboard.subtitle")}</p>
+        </div>
+        <div className="dataset-chip"><span>{t("dashboard.stats.source")}</span><strong>Bybit-BC</strong></div>
+      </section>
 
       <StatsBar cases={cases} />
 
-      {cases.length === 0 ? (
-        <div className="error-container">
-          <h3>{t("dashboard.no_cases")}</h3>
-          <p>{t("dashboard.no_cases_desc")}</p>
+      <section className="case-section">
+        <div className="section-heading">
+          <div><h2>{t("dashboard.queue_title")}</h2><p>{t("dashboard.queue_desc")}</p></div>
+          <div className="case-toolbar">
+            <label className="search-field">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.3" /><path d="m12.7 12.7 4 4" /></svg>
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("dashboard.search")} />
+            </label>
+            <div className="filter-tabs" role="group" aria-label="Status filter">
+              {(["ALL", "PENDING_REVIEW", "REVIEWED"] as const).map((value) => (
+                <button type="button" key={value} className={status === value ? "active" : ""} onClick={() => setStatus(value)}>
+                  {value === "ALL" ? t("dashboard.filter.all") : value === "PENDING_REVIEW" ? t("dashboard.filter.pending") : t("dashboard.filter.reviewed")}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      ) : (
-        <div className="cases-grid" id="cases-grid">
-          {cases.map((c, i) => (
-            <CaseCard key={c.analysis_id} caseItem={c} index={i} />
-          ))}
-        </div>
-      )}
+
+        {filtered.length === 0 ? (
+          <div className="empty-state"><span>⌕</span><h3>{t("dashboard.no_cases")}</h3><p>{t("dashboard.no_cases_desc")}</p></div>
+        ) : (
+          <div className="cases-grid" id="cases-grid">{filtered.map((item, index) => <CaseCard key={item.analysis_id} caseItem={item} index={index} />)}</div>
+        )}
+      </section>
     </main>
   );
 }
