@@ -1,0 +1,162 @@
+[
+  {
+    "analysis_id": "analysis-001",
+    "target_transaction": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c",
+    "prediction_score": 0.999846,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-002",
+    "target_transaction": "40a5f6fe7a52dd248d983800d91a4abc6a40c88b889f74b5224adf25743b7e61",
+    "prediction_score": 0.999836,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-003",
+    "target_transaction": "44849751eb75d3b987c7a343b7fce83cacb84a1c062913ffec4bcebb33659b41",
+    "prediction_score": 0.999833,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-004",
+    "target_transaction": "8e40feb4c7822d7738d7e7908c1d6463fc44db8db858e964db4719cd3968906b",
+    "prediction_score": 0.999669,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-005",
+    "target_transaction": "355fc58f9274e8b1692e1429add44067d2e4c2048085bb24b844120fca59258e",
+    "prediction_score": 0.999521,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-006",
+    "target_transaction": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3",
+    "prediction_score": 0.999452,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-007",
+    "target_transaction": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde",
+    "prediction_score": 0.999387,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-008",
+    "target_transaction": "d913672c0c3de36b4e1ef47f0f9fa5a57b7a53dd31c821bcb79322eb1a968990",
+    "prediction_score": 0.999306,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-009",
+    "target_transaction": "a95686fc135f8f8b0b4575fb457c3456e7f2cf9d49c4a8852d6e77122a7b7502",
+    "prediction_score": 0.999274,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-010",
+    "target_transaction": "e9aa170a89ed4bae811612dce785ab6114ed6a09e0f7abd448a75f7e7e96a1ea",
+    "prediction_score": 0.998642,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-011",
+    "target_transaction": "b86354ce3bfc7765ac0c72501d6db44cd443911ad67bd2c87f79d2c83fc8b4c6",
+    "prediction_score": 0.998523,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-012",
+    "target_transaction": "c1b899012c756924b988537e8117513bcb3b20765596dd78a8b2297199e2427d",
+    "prediction_score": 0.998375,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-013",
+    "target_transaction": "d6da2c186569f481ee780fba16a884ffd091bc896f48c99eb4d5e0f26da0b7e4",
+    "prediction_score": 0.99836,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-014",
+    "target_transaction": "e1fa35e8c656b8f93a59b395dea7779a04cb3e3f601c19537a88fff753c9ed4a",
+    "prediction_score": 0.998173,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-015",
+    "target_transaction": "93496695b0e36d703f7dc8a33699645bd9b55c55f2d4b680f82e768cbae512b9",
+    "prediction_score": 0.998168,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-016",
+    "target_transaction": "449671fa1a660b01ab5eea9d28fa65a52ba5d203b57c31ff4b647cfe00873ecb",
+    "prediction_score": 0.998121,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-017",
+    "target_transaction": "5b4eadc8df4f4a7e4955cacceac756774bc324d69bb0036eb8287b45cd75363d",
+    "prediction_score": 0.998024,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-018",
+    "target_transaction": "e44f3e63f0d964264b0363cc1b67400cb2e1d2d6aa7136f9e64629221d386219",
+    "prediction_score": 0.997962,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-019",
+    "target_transaction": "b2aabfaa6a2cbcf838d8edc9f57e3fbb75a2348f53fa050f35923d5cfa804ad3",
+    "prediction_score": 0.997806,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  },
+  {
+    "analysis_id": "analysis-020",
+    "target_transaction": "0235e9e35f7468b1222098eeb7a8cd20b9a59229b2b76cafe59ef78ed3de1b06",
+    "prediction_score": 0.997743,
+    "prediction_level": "HIGH",
+    "model_name": "GraphSAGE + Stacked Locator",
+    "status": "PENDING_REVIEW"
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "analysis_id": "analysis-007",
+  "dataset": "Bybit-BC",
+  "target_transaction": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde",
+  "prediction": {
+    "score": 0.999387,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "bc1q0zcpa47m4y05h2yd88uxwf5ffw4sd5gaamhqmk"
+      },
+      {
+        "id": "bc1q2aqen57a7xgrxrsnr743vqymq5x0dnemr0mldt"
+      },
+      {
+        "id": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q"
+      },
+      {
+        "id": "bc1qhpm0dpan40h9sfusqkgsakd5k445rr3fkgrjv6"
+      },
+      {
+        "id": "bc1qnrqlrm7nxk3w30rr9p9w7qt594ldpslac2hnzx"
+      }
+    ],
+    "edges": [
+      {
+        "source": "bc1qnrqlrm7nxk3w30rr9p9w7qt594ldpslac2hnzx",
+        "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q"
+      },
+      {
+        "source": "bc1q0zcpa47m4y05h2yd88uxwf5ffw4sd5gaamhqmk",
+        "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q"
+      },
+      {
+        "source": "bc1qhpm0dpan40h9sfusqkgsakd5k445rr3fkgrjv6",
+        "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q"
+      },
+      {
+        "source": "bc1q2aqen57a7xgrxrsnr743vqymq5x0dnemr0mldt",
+        "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "bc1qnrqlrm7nxk3w30rr9p9w7qt594ldpslac2hnzx",
+      "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+      "rank": 1,
+      "score_drop": 0.0
+    },
+    {
+      "source": "bc1q0zcpa47m4y05h2yd88uxwf5ffw4sd5gaamhqmk",
+      "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+      "rank": 2,
+      "score_drop": 6.2e-05
+    },
+    {
+      "source": "bc1qhpm0dpan40h9sfusqkgsakd5k445rr3fkgrjv6",
+      "target": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+      "rank": 3,
+      "score_drop": 0.0
+    }
+  ],
+  "validation": {
+    "original_score": 0.999387,
+    "recommended_removed_score": 0.999387,
+    "random_removed_score": 0.999387
+  },
+  "status": "PENDING_REVIEW"
+}

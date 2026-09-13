@@ -1,0 +1,153 @@
+{
+  "analysis_id": "analysis-006",
+  "dataset": "Bybit-BC",
+  "target_transaction": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3",
+  "prediction": {
+    "score": 0.999452,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "12XHZUw5j5m9PtFNJ9HPuETz3zVhWscGEg"
+      },
+      {
+        "id": "12uiddciSU7d5UXozVhp9eKqecXdM9u4Y3"
+      },
+      {
+        "id": "132x9fCqEPhgeCCYaJkBi22UKTLjipqbvk"
+      },
+      {
+        "id": "13M5ve7rHitcohNML9rV2z4bpuWtzWTvJR"
+      },
+      {
+        "id": "14Q72bHGJZKTj6UZda84xoBjuX8239EUni"
+      },
+      {
+        "id": "154RcSsouBUEzYooTtZQwCfPo8x3MN9LsV"
+      },
+      {
+        "id": "17mgjhnAx7vuhgm1QY7KAegovMS3MyB4E"
+      },
+      {
+        "id": "19CKq5nWPijjEjJwETRgBD5pyrjPQ6Sou9"
+      },
+      {
+        "id": "1BwtP7Y8vnM9qSCqKkQLdNzyHGjAfSVbHd"
+      },
+      {
+        "id": "1CWnHBn7CNp9mnNmschDqTzNyUybuEittq"
+      },
+      {
+        "id": "1GqksuCRY1Rr2M3YDDkbTUCfNVbqdhCK7D"
+      },
+      {
+        "id": "1KuUMCZksxL86g9SZutUFE7U1PBYkTZqXs"
+      },
+      {
+        "id": "1MY5i5es7KTDna3hyJzuFBa4SKTmHZL7xV"
+      },
+      {
+        "id": "1QGUT25KSB6KUtb5FvMmDCgfTrHFCnpfr4"
+      },
+      {
+        "id": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm"
+      },
+      {
+        "id": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      }
+    ],
+    "edges": [
+      {
+        "source": "1QGUT25KSB6KUtb5FvMmDCgfTrHFCnpfr4",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "1KuUMCZksxL86g9SZutUFE7U1PBYkTZqXs",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "1BwtP7Y8vnM9qSCqKkQLdNzyHGjAfSVbHd",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "19CKq5nWPijjEjJwETRgBD5pyrjPQ6Sou9",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "1GqksuCRY1Rr2M3YDDkbTUCfNVbqdhCK7D",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "1MY5i5es7KTDna3hyJzuFBa4SKTmHZL7xV",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "12XHZUw5j5m9PtFNJ9HPuETz3zVhWscGEg",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "17mgjhnAx7vuhgm1QY7KAegovMS3MyB4E",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "154RcSsouBUEzYooTtZQwCfPo8x3MN9LsV",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "12uiddciSU7d5UXozVhp9eKqecXdM9u4Y3",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "1CWnHBn7CNp9mnNmschDqTzNyUybuEittq",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "132x9fCqEPhgeCCYaJkBi22UKTLjipqbvk",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "13M5ve7rHitcohNML9rV2z4bpuWtzWTvJR",
+        "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79"
+      },
+      {
+        "source": "13M5ve7rHitcohNML9rV2z4bpuWtzWTvJR",
+        "target": "14Q72bHGJZKTj6UZda84xoBjuX8239EUni"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "1QGUT25KSB6KUtb5FvMmDCgfTrHFCnpfr4",
+      "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+      "rank": 1,
+      "score_drop": 0.0
+    },
+    {
+      "source": "1KuUMCZksxL86g9SZutUFE7U1PBYkTZqXs",
+      "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+      "rank": 2,
+      "score_drop": 0.0
+    },
+    {
+      "source": "1BwtP7Y8vnM9qSCqKkQLdNzyHGjAfSVbHd",
+      "target": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+      "rank": 3,
+      "score_drop": 0.0
+    }
+  ],
+  "validation": {
+    "original_score": 0.999452,
+    "recommended_removed_score": 0.999452,
+    "random_removed_score": 0.999452
+  },
+  "status": "PENDING_REVIEW"
+}

@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/investigation/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/report",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/verify",
+      "destination": "/index.html"
+    }
+  ]
+}

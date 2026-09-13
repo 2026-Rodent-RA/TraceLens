@@ -1,0 +1,90 @@
+{
+  "analysis_id": "analysis-001",
+  "dataset": "Bybit-BC",
+  "target_transaction": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c",
+  "prediction": {
+    "score": 0.999846,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP"
+      },
+      {
+        "id": "17T7a7EuPvzKmVEujBnyuhoaobbza1Tmmk"
+      },
+      {
+        "id": "18n1mjbrZdPBr1yT89m9b6jLhCZMrtjX1e"
+      },
+      {
+        "id": "1AUAge6GJdbiSpQSfhN1dgBxG8oJHrtR45"
+      },
+      {
+        "id": "1GqfipoMmAVgNRYGnvXxVek7jxyXvy3N23"
+      },
+      {
+        "id": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm"
+      },
+      {
+        "id": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7"
+      }
+    ],
+    "edges": [
+      {
+        "source": "17T7a7EuPvzKmVEujBnyuhoaobbza1Tmmk",
+        "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7"
+      },
+      {
+        "source": "1GqfipoMmAVgNRYGnvXxVek7jxyXvy3N23",
+        "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7"
+      },
+      {
+        "source": "18n1mjbrZdPBr1yT89m9b6jLhCZMrtjX1e",
+        "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7"
+      },
+      {
+        "source": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP",
+        "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7"
+      },
+      {
+        "source": "1AUAge6GJdbiSpQSfhN1dgBxG8oJHrtR45",
+        "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7"
+      },
+      {
+        "source": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP",
+        "target": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "17T7a7EuPvzKmVEujBnyuhoaobbza1Tmmk",
+      "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+      "rank": 1,
+      "score_drop": 0.0
+    },
+    {
+      "source": "1GqfipoMmAVgNRYGnvXxVek7jxyXvy3N23",
+      "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+      "rank": 2,
+      "score_drop": 2e-06
+    },
+    {
+      "source": "18n1mjbrZdPBr1yT89m9b6jLhCZMrtjX1e",
+      "target": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+      "rank": 3,
+      "score_drop": 0.0
+    }
+  ],
+  "validation": {
+    "original_score": 0.999846,
+    "recommended_removed_score": 0.999846,
+    "random_removed_score": 0.999846
+  },
+  "status": "PENDING_REVIEW"
+}
