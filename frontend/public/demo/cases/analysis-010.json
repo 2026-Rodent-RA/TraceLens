@@ -1,0 +1,53 @@
+{
+  "analysis_id": "analysis-010",
+  "dataset": "Bybit-BC",
+  "target_transaction": "e9aa170a89ed4bae811612dce785ab6114ed6a09e0f7abd448a75f7e7e96a1ea",
+  "prediction": {
+    "score": 0.998642,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev"
+      },
+      {
+        "id": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv"
+      }
+    ],
+    "edges": [
+      {
+        "source": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+        "target": "bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev"
+      },
+      {
+        "source": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+        "target": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+      "target": "bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev",
+      "rank": 1,
+      "score_drop": 0.0
+    },
+    {
+      "source": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+      "target": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+      "rank": 2,
+      "score_drop": 5.7e-05
+    }
+  ],
+  "validation": {
+    "original_score": 0.998642,
+    "recommended_removed_score": 0.998642,
+    "random_removed_score": 0.998585
+  },
+  "status": "PENDING_REVIEW"
+}

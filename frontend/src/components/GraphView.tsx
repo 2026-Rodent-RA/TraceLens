@@ -1,5 +1,5 @@
 // frontend/src/components/GraphView.tsx
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
 import type { Graph, RecommendedEdge } from "../types/analysis";
 

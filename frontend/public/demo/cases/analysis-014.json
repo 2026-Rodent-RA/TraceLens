@@ -1,0 +1,56 @@
+{
+  "analysis_id": "analysis-014",
+  "dataset": "Bybit-BC",
+  "target_transaction": "e1fa35e8c656b8f93a59b395dea7779a04cb3e3f601c19537a88fff753c9ed4a",
+  "prediction": {
+    "score": 0.998173,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "bc1py28kyy30jfdqvd6gmqxupnqehlx7jthz6xfcklrzryvwku8vdk6sjzd3rf"
+      },
+      {
+        "id": "bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2"
+      },
+      {
+        "id": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas"
+      }
+    ],
+    "edges": [
+      {
+        "source": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+        "target": "bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2"
+      },
+      {
+        "source": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+        "target": "bc1py28kyy30jfdqvd6gmqxupnqehlx7jthz6xfcklrzryvwku8vdk6sjzd3rf"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+      "target": "bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2",
+      "rank": 1,
+      "score_drop": 0.0
+    },
+    {
+      "source": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+      "target": "bc1py28kyy30jfdqvd6gmqxupnqehlx7jthz6xfcklrzryvwku8vdk6sjzd3rf",
+      "rank": 2,
+      "score_drop": 0.001532
+    }
+  ],
+  "validation": {
+    "original_score": 0.998173,
+    "recommended_removed_score": 0.998173,
+    "random_removed_score": 0.996641
+  },
+  "status": "PENDING_REVIEW"
+}

@@ -1,7 +1,13 @@
 // frontend/src/pages/Report.tsx
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getAttestation, issueReport, verifyReport, revokeReport } from "../services/api";
+import {
+  DEMO_MODE,
+  getAttestation,
+  issueReport,
+  verifyReport,
+  revokeReport,
+} from "../services/api";
 import type { ReportResponse } from "../types/report";
 import { useApp } from "../i18n/context";
 
@@ -160,21 +166,33 @@ export default function Report() {
           </div>
           
           <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-            {!isIssued && (
+            {!DEMO_MODE && !isIssued && (
               <button className="btn-primary" onClick={handleIssue} disabled={actionLoading}>
                 {actionLoading ? "Processing..." : t("report.issue_btn")}
               </button>
             )}
-            {isIssued && !isRevoked && (
+            {!DEMO_MODE && isIssued && !isRevoked && (
               <button className="btn-secondary" onClick={handleRevoke} disabled={actionLoading} style={{ color: "var(--color-risk-high)", borderColor: "var(--color-risk-high)" }}>
                 {t("report.revoke_btn")}
               </button>
             )}
             <button className="btn-secondary" onClick={handleVerify} disabled={actionLoading}>
-              {t("report.verify_btn")}
+              {DEMO_MODE ? t("report.verify_local_btn") : t("report.verify_btn")}
             </button>
           </div>
         </div>
+
+        {DEMO_MODE && (
+          <div style={{
+            fontSize: "var(--text-sm)",
+            color: "var(--color-text-secondary)",
+            background: "var(--color-bg-surface)",
+            padding: "var(--space-3)",
+            borderRadius: "var(--radius-md)",
+          }}>
+            {t("report.demo_note")}
+          </div>
+        )}
         
         {verification && (
           <div style={{

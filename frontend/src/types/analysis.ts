@@ -1,6 +1,5 @@
 // frontend/src/types/analysis.ts
-// Mock AI 분석 데이터 타입 정의.
-// 최종 AI Schema가 아닙니다.
+// ML 출력, 백엔드 API와 공유하는 MVP 분석 데이터 타입.
 
 export interface Prediction {
   score: number;

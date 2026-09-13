@@ -133,7 +133,7 @@ function StatsBar({ cases }: StatsBarProps) {
       <div className="stat-item">
         <span className="stat-label">{t("dashboard.stats.source")}</span>
         <span className="stat-value" style={{ fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>
-          Elliptic (Mock)
+          Bybit-BC
         </span>
       </div>
     </div>

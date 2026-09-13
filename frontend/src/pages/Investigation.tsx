@@ -119,7 +119,7 @@ export default function Investigation() {
             <h3>{t("investigation.ai_analysis")}</h3>
             <div className="metrics-grid">
               <div>
-                <div className="metric-label">{t("investigation.gcn_score")}</div>
+                <div className="metric-label">{t("investigation.risk_score")}</div>
                 <div className="metric-value">{caseData.prediction.score} ({caseData.prediction.level})</div>
               </div>
               <div>
