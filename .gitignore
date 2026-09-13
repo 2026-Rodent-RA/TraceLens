@@ -109,6 +109,12 @@ blockchain/coverage/
 blockchain/coverage.json
 blockchain/typechain-types/
 
+# dataset
+/ml/data
+/ml/outputs
+
+# logging
+/research_log
 # -----------------------------------------------------------------------------
 # SQLite / Storage
 # -----------------------------------------------------------------------------
@@ -118,13 +124,6 @@ blockchain/typechain-types/
 
 # Backend storage directory (runtime data, not code)
 backend/data/
-
-# -----------------------------------------------------------------------------
-# ML / Dataset (raw data never committed)
-# -----------------------------------------------------------------------------
-ml/data/raw/
-ml/data/processed/
-ml/outputs/
 
 # -----------------------------------------------------------------------------
 # OS / Editor
@@ -142,3 +141,4 @@ Thumbs.db
 # -----------------------------------------------------------------------------
 *.log
 logs/
+
