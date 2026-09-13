@@ -1,0 +1,43 @@
+{
+  "analysis_id": "analysis-011",
+  "dataset": "Bybit-BC",
+  "target_transaction": "b86354ce3bfc7765ac0c72501d6db44cd443911ad67bd2c87f79d2c83fc8b4c6",
+  "prediction": {
+    "score": 0.998523,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "1MxZqPVEtVoPG3aHywFGKKRhhgMFkz1TfG"
+      },
+      {
+        "id": "bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe"
+      }
+    ],
+    "edges": [
+      {
+        "source": "1MxZqPVEtVoPG3aHywFGKKRhhgMFkz1TfG",
+        "target": "bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "1MxZqPVEtVoPG3aHywFGKKRhhgMFkz1TfG",
+      "target": "bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe",
+      "rank": 1,
+      "score_drop": 0.998523
+    }
+  ],
+  "validation": {
+    "original_score": 0.998523,
+    "recommended_removed_score": 0.0,
+    "random_removed_score": 0.0
+  },
+  "status": "PENDING_REVIEW"
+}

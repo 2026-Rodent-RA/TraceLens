@@ -1,6 +1,6 @@
 """backend/app/models/analysis.py
 Pydantic models for AI analysis data.
-이 Schema는 Mock 데이터 구조 기반이며, 최종 AI Schema가 아닙니다.
+ML 출력과 프론트엔드가 공유하는 MVP Schema입니다.
 """
 from typing import Literal
 from pydantic import BaseModel
@@ -46,7 +46,7 @@ class Validation(BaseModel):
 class AnalysisResult(BaseModel):
     """
     단일 분석 케이스의 전체 데이터.
-    Mock JSON의 _comment 필드는 무시됩니다.
+    단일 온체인 조사 사건의 예측, 그래프, 추천 연결을 담습니다.
     """
     analysis_id: str
     dataset: str
@@ -69,3 +69,5 @@ class CaseSummary(BaseModel):
     prediction_level: str
     model_name: str
     status: str
+
+    model_config = {"protected_namespaces": ()}

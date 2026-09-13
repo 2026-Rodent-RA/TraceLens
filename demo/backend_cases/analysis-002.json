@@ -1,0 +1,69 @@
+{
+  "analysis_id": "analysis-002",
+  "dataset": "Bybit-BC",
+  "target_transaction": "40a5f6fe7a52dd248d983800d91a4abc6a40c88b889f74b5224adf25743b7e61",
+  "prediction": {
+    "score": 0.999836,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "bc1q4e3tswfcc8p0cnc4sw5eclxveunmdyu6eqwa8e"
+      },
+      {
+        "id": "bc1qe5z0yewc4yperc9udzv4mk2fu0tkzz02txykqd"
+      },
+      {
+        "id": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e"
+      },
+      {
+        "id": "bc1qmctc3dyyvsph46se6lgvuj5p9wt23ghjz0e2ga"
+      }
+    ],
+    "edges": [
+      {
+        "source": "bc1qmctc3dyyvsph46se6lgvuj5p9wt23ghjz0e2ga",
+        "target": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e"
+      },
+      {
+        "source": "bc1qe5z0yewc4yperc9udzv4mk2fu0tkzz02txykqd",
+        "target": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e"
+      },
+      {
+        "source": "bc1q4e3tswfcc8p0cnc4sw5eclxveunmdyu6eqwa8e",
+        "target": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "bc1qmctc3dyyvsph46se6lgvuj5p9wt23ghjz0e2ga",
+      "target": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+      "rank": 1,
+      "score_drop": 0.0
+    },
+    {
+      "source": "bc1qe5z0yewc4yperc9udzv4mk2fu0tkzz02txykqd",
+      "target": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+      "rank": 2,
+      "score_drop": 0.000281
+    },
+    {
+      "source": "bc1q4e3tswfcc8p0cnc4sw5eclxveunmdyu6eqwa8e",
+      "target": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+      "rank": 3,
+      "score_drop": 0.0
+    }
+  ],
+  "validation": {
+    "original_score": 0.999836,
+    "recommended_removed_score": 0.999836,
+    "random_removed_score": 0.999555
+  },
+  "status": "PENDING_REVIEW"
+}

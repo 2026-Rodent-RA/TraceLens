@@ -32,6 +32,8 @@ class ReportContent(BaseModel):
     recommended_edges: List[ReportEdge]
     reviews: List[ReportReview]
 
+    model_config = {"protected_namespaces": ()}
+
 class ReportResponse(BaseModel):
     report_id: str
     content: ReportContent
