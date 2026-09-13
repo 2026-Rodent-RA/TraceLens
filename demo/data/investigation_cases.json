@@ -1,0 +1,2328 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-09-13T08:48:34.000707+00:00",
+  "model": {
+    "detector": "GraphSAGE edge classifier",
+    "locator": "Pairwise stacked locator",
+    "dataset": "Bybit-BC"
+  },
+  "case_count": 20,
+  "cases": [
+    {
+      "case_id": "case-001",
+      "rank": 1,
+      "txhash": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c",
+      "occurred_at": "2025-03-04T21:06:51+00:00",
+      "risk_score": 0.999846,
+      "risk_level": "critical",
+      "transfer_count": 7,
+      "total_amount_btc": 4.957583,
+      "recommended_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+      "summary": "7개 송금 중 bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 1.000입니다."
+        },
+        {
+          "code": "MULTI_OUTPUT",
+          "title": "다중 출력 거래",
+          "detail": "한 거래에서 7개의 송금 출력이 생성됐습니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP",
+          "role": "sender"
+        },
+        {
+          "id": "17T7a7EuPvzKmVEujBnyuhoaobbza1Tmmk",
+          "role": "sender"
+        },
+        {
+          "id": "18n1mjbrZdPBr1yT89m9b6jLhCZMrtjX1e",
+          "role": "sender"
+        },
+        {
+          "id": "1AUAge6GJdbiSpQSfhN1dgBxG8oJHrtR45",
+          "role": "sender"
+        },
+        {
+          "id": "1GqfipoMmAVgNRYGnvXxVek7jxyXvy3N23",
+          "role": "sender"
+        },
+        {
+          "id": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116859",
+          "rank": 1,
+          "from_address": "17T7a7EuPvzKmVEujBnyuhoaobbza1Tmmk",
+          "to_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "amount_btc": 0.95760871,
+          "amount_share": 0.19316,
+          "gnn_risk_score": 0.999833,
+          "locator_score": 0.999355,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116873",
+          "rank": 2,
+          "from_address": "1GqfipoMmAVgNRYGnvXxVek7jxyXvy3N23",
+          "to_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "amount_btc": 0.95477252,
+          "amount_share": 0.192588,
+          "gnn_risk_score": 0.999846,
+          "locator_score": 0.999244,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116850",
+          "rank": 3,
+          "from_address": "18n1mjbrZdPBr1yT89m9b6jLhCZMrtjX1e",
+          "to_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "amount_btc": 0.95402465,
+          "amount_share": 0.192437,
+          "gnn_risk_score": 0.999444,
+          "locator_score": 0.996991,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116858",
+          "rank": 4,
+          "from_address": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP",
+          "to_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "amount_btc": 0.87968345,
+          "amount_share": 0.177442,
+          "gnn_risk_score": 0.999654,
+          "locator_score": 0.99599,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116872",
+          "rank": 5,
+          "from_address": "1AUAge6GJdbiSpQSfhN1dgBxG8oJHrtR45",
+          "to_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "amount_btc": 0.85584763,
+          "amount_share": 0.172634,
+          "gnn_risk_score": 0.999844,
+          "locator_score": 0.994593,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116875",
+          "rank": 6,
+          "from_address": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP",
+          "to_address": "bc1qkkz28p78pe4qm6uthe5ayfewx5p02yufsrsnf7",
+          "amount_btc": 0.19669304,
+          "amount_share": 0.039675,
+          "gnn_risk_score": 0.999662,
+          "locator_score": 0.994208,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "7a31f23cd60b8429ccb0c4aeb64d73b0335a589f84e16101b1f18b141503052c:116874",
+          "rank": 7,
+          "from_address": "164KygsvvDzXMwjzVkSLogrubqsNsMgLRP",
+          "to_address": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm",
+          "amount_btc": 0.158953,
+          "amount_share": 0.032063,
+          "gnn_risk_score": 0.999507,
+          "locator_score": 0.992279,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-002",
+      "rank": 2,
+      "txhash": "40a5f6fe7a52dd248d983800d91a4abc6a40c88b889f74b5224adf25743b7e61",
+      "occurred_at": "2025-03-04T11:28:00+00:00",
+      "risk_score": 0.999836,
+      "risk_level": "critical",
+      "transfer_count": 3,
+      "total_amount_btc": 1.57615682,
+      "recommended_address": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+      "summary": "3개 송금 중 bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.999입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1q4e3tswfcc8p0cnc4sw5eclxveunmdyu6eqwa8e",
+          "role": "sender"
+        },
+        {
+          "id": "bc1qe5z0yewc4yperc9udzv4mk2fu0tkzz02txykqd",
+          "role": "sender"
+        },
+        {
+          "id": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qmctc3dyyvsph46se6lgvuj5p9wt23ghjz0e2ga",
+          "role": "sender"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "40a5f6fe7a52dd248d983800d91a4abc6a40c88b889f74b5224adf25743b7e61:113496",
+          "rank": 1,
+          "from_address": "bc1qmctc3dyyvsph46se6lgvuj5p9wt23ghjz0e2ga",
+          "to_address": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+          "amount_btc": 0.78173707,
+          "amount_share": 0.495977,
+          "gnn_risk_score": 0.999393,
+          "locator_score": 0.999328,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "40a5f6fe7a52dd248d983800d91a4abc6a40c88b889f74b5224adf25743b7e61:113495",
+          "rank": 2,
+          "from_address": "bc1qe5z0yewc4yperc9udzv4mk2fu0tkzz02txykqd",
+          "to_address": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+          "amount_btc": 0.40390951,
+          "amount_share": 0.256262,
+          "gnn_risk_score": 0.999836,
+          "locator_score": 0.998815,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "40a5f6fe7a52dd248d983800d91a4abc6a40c88b889f74b5224adf25743b7e61:113494",
+          "rank": 3,
+          "from_address": "bc1q4e3tswfcc8p0cnc4sw5eclxveunmdyu6eqwa8e",
+          "to_address": "bc1qgcsznmgxnvnnpz8n3zpr2a3lu4jnhzw9dxlc2e",
+          "amount_btc": 0.39051024,
+          "amount_share": 0.247761,
+          "gnn_risk_score": 0.999555,
+          "locator_score": 0.993064,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-003",
+      "rank": 3,
+      "txhash": "44849751eb75d3b987c7a343b7fce83cacb84a1c062913ffec4bcebb33659b41",
+      "occurred_at": "2025-03-04T10:11:00+00:00",
+      "risk_score": 0.999833,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 0.60964132,
+      "recommended_address": "bc1qs7q9ce9nk6gttftk3ayqur4kf8505rv2gw8k65",
+      "summary": "1개 송금 중 bc1qs7q9ce9nk6gttftk3ayqur4kf8505rv2gw8k65로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 1.000입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qs7q9ce9nk6gttftk3ayqur4kf8505rv2gw8k65를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1qs7q9ce9nk6gttftk3ayqur4kf8505rv2gw8k65",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m",
+          "role": "sender"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "44849751eb75d3b987c7a343b7fce83cacb84a1c062913ffec4bcebb33659b41:113212",
+          "rank": 1,
+          "from_address": "bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m",
+          "to_address": "bc1qs7q9ce9nk6gttftk3ayqur4kf8505rv2gw8k65",
+          "amount_btc": 0.60964132,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.999833,
+          "locator_score": 0.998473,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-004",
+      "rank": 4,
+      "txhash": "8e40feb4c7822d7738d7e7908c1d6463fc44db8db858e964db4719cd3968906b",
+      "occurred_at": "2025-03-04T18:37:34+00:00",
+      "risk_score": 0.999669,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 0.22532163,
+      "recommended_address": "186Lo5wnzAe8X3zhmd8RCXdHXY6RiD2aAt",
+      "summary": "1개 송금 중 186Lo5wnzAe8X3zhmd8RCXdHXY6RiD2aAt로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 1.000입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 186Lo5wnzAe8X3zhmd8RCXdHXY6RiD2aAt를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "186Lo5wnzAe8X3zhmd8RCXdHXY6RiD2aAt",
+          "role": "receiver"
+        },
+        {
+          "id": "1HoBdbfENGo5nN2XESTHGGLaJ8xsQKdcuw",
+          "role": "sender"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "8e40feb4c7822d7738d7e7908c1d6463fc44db8db858e964db4719cd3968906b:116357",
+          "rank": 1,
+          "from_address": "1HoBdbfENGo5nN2XESTHGGLaJ8xsQKdcuw",
+          "to_address": "186Lo5wnzAe8X3zhmd8RCXdHXY6RiD2aAt",
+          "amount_btc": 0.22532163,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.999669,
+          "locator_score": 0.998778,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-005",
+      "rank": 5,
+      "txhash": "355fc58f9274e8b1692e1429add44067d2e4c2048085bb24b844120fca59258e",
+      "occurred_at": "2025-03-04T19:59:56+00:00",
+      "risk_score": 0.999521,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 0.00425312,
+      "recommended_address": "1LUfL9iz2fcLjBcfCNL9sEQNMNRdYAhEzd",
+      "summary": "2개 송금 중 1LUfL9iz2fcLjBcfCNL9sEQNMNRdYAhEzd로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 1.000입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 1LUfL9iz2fcLjBcfCNL9sEQNMNRdYAhEzd를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "16criQNFG6tgxNbvj7LdqiM5r8bYf561kX",
+          "role": "sender"
+        },
+        {
+          "id": "1LUfL9iz2fcLjBcfCNL9sEQNMNRdYAhEzd",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1q43727w99qpg58ykswgzvfth7skvaagd9l03ppp",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "355fc58f9274e8b1692e1429add44067d2e4c2048085bb24b844120fca59258e:116741",
+          "rank": 1,
+          "from_address": "16criQNFG6tgxNbvj7LdqiM5r8bYf561kX",
+          "to_address": "1LUfL9iz2fcLjBcfCNL9sEQNMNRdYAhEzd",
+          "amount_btc": 5.61e-06,
+          "amount_share": 0.001319,
+          "gnn_risk_score": 0.999521,
+          "locator_score": 0.997763,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "355fc58f9274e8b1692e1429add44067d2e4c2048085bb24b844120fca59258e:116745",
+          "rank": 2,
+          "from_address": "16criQNFG6tgxNbvj7LdqiM5r8bYf561kX",
+          "to_address": "bc1q43727w99qpg58ykswgzvfth7skvaagd9l03ppp",
+          "amount_btc": 0.00424751,
+          "amount_share": 0.998681,
+          "gnn_risk_score": 0.065207,
+          "locator_score": 0.777383,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-006",
+      "rank": 6,
+      "txhash": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3",
+      "occurred_at": "2025-03-04T22:00:10+00:00",
+      "risk_score": 0.999452,
+      "risk_level": "critical",
+      "transfer_count": 15,
+      "total_amount_btc": 6.725354,
+      "recommended_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+      "summary": "15개 송금 중 bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.998입니다."
+        },
+        {
+          "code": "MULTI_OUTPUT",
+          "title": "다중 출력 거래",
+          "detail": "한 거래에서 15개의 송금 출력이 생성됐습니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "12XHZUw5j5m9PtFNJ9HPuETz3zVhWscGEg",
+          "role": "sender"
+        },
+        {
+          "id": "12uiddciSU7d5UXozVhp9eKqecXdM9u4Y3",
+          "role": "sender"
+        },
+        {
+          "id": "132x9fCqEPhgeCCYaJkBi22UKTLjipqbvk",
+          "role": "sender"
+        },
+        {
+          "id": "13M5ve7rHitcohNML9rV2z4bpuWtzWTvJR",
+          "role": "sender"
+        },
+        {
+          "id": "14Q72bHGJZKTj6UZda84xoBjuX8239EUni",
+          "role": "receiver"
+        },
+        {
+          "id": "154RcSsouBUEzYooTtZQwCfPo8x3MN9LsV",
+          "role": "sender"
+        },
+        {
+          "id": "17mgjhnAx7vuhgm1QY7KAegovMS3MyB4E",
+          "role": "sender"
+        },
+        {
+          "id": "19CKq5nWPijjEjJwETRgBD5pyrjPQ6Sou9",
+          "role": "sender"
+        },
+        {
+          "id": "1BwtP7Y8vnM9qSCqKkQLdNzyHGjAfSVbHd",
+          "role": "sender"
+        },
+        {
+          "id": "1CWnHBn7CNp9mnNmschDqTzNyUybuEittq",
+          "role": "sender"
+        },
+        {
+          "id": "1GqksuCRY1Rr2M3YDDkbTUCfNVbqdhCK7D",
+          "role": "sender"
+        },
+        {
+          "id": "1KuUMCZksxL86g9SZutUFE7U1PBYkTZqXs",
+          "role": "sender"
+        },
+        {
+          "id": "1MY5i5es7KTDna3hyJzuFBa4SKTmHZL7xV",
+          "role": "sender"
+        },
+        {
+          "id": "1QGUT25KSB6KUtb5FvMmDCgfTrHFCnpfr4",
+          "role": "sender"
+        },
+        {
+          "id": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm",
+          "role": "sender"
+        },
+        {
+          "id": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118299",
+          "rank": 1,
+          "from_address": "1QGUT25KSB6KUtb5FvMmDCgfTrHFCnpfr4",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.91650875,
+          "amount_share": 0.136277,
+          "gnn_risk_score": 0.998309,
+          "locator_score": 0.999421,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118297",
+          "rank": 2,
+          "from_address": "1KuUMCZksxL86g9SZutUFE7U1PBYkTZqXs",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.75807967,
+          "amount_share": 0.11272,
+          "gnn_risk_score": 0.999404,
+          "locator_score": 0.998139,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118295",
+          "rank": 3,
+          "from_address": "1BwtP7Y8vnM9qSCqKkQLdNzyHGjAfSVbHd",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.22473337,
+          "amount_share": 0.033416,
+          "gnn_risk_score": 0.998105,
+          "locator_score": 0.997636,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118294",
+          "rank": 4,
+          "from_address": "19CKq5nWPijjEjJwETRgBD5pyrjPQ6Sou9",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 3.39989886,
+          "amount_share": 0.505535,
+          "gnn_risk_score": 0.835719,
+          "locator_score": 0.997409,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118256",
+          "rank": 5,
+          "from_address": "1uv8p67WS3PYbrbRycSAV2hPFLAQQRRUm",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.158953,
+          "amount_share": 0.023635,
+          "gnn_risk_score": 0.985482,
+          "locator_score": 0.997099,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118300",
+          "rank": 6,
+          "from_address": "1GqksuCRY1Rr2M3YDDkbTUCfNVbqdhCK7D",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.12133069,
+          "amount_share": 0.018041,
+          "gnn_risk_score": 0.999452,
+          "locator_score": 0.99652,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118298",
+          "rank": 7,
+          "from_address": "1MY5i5es7KTDna3hyJzuFBa4SKTmHZL7xV",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.4053108,
+          "amount_share": 0.060266,
+          "gnn_risk_score": 0.776531,
+          "locator_score": 0.990858,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118301",
+          "rank": 8,
+          "from_address": "12XHZUw5j5m9PtFNJ9HPuETz3zVhWscGEg",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.3283392,
+          "amount_share": 0.048821,
+          "gnn_risk_score": 0.787513,
+          "locator_score": 0.990507,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118293",
+          "rank": 9,
+          "from_address": "17mgjhnAx7vuhgm1QY7KAegovMS3MyB4E",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.13424362,
+          "amount_share": 0.019961,
+          "gnn_risk_score": 0.837063,
+          "locator_score": 0.990507,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118292",
+          "rank": 10,
+          "from_address": "154RcSsouBUEzYooTtZQwCfPo8x3MN9LsV",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.07784464,
+          "amount_share": 0.011575,
+          "gnn_risk_score": 0.842801,
+          "locator_score": 0.988095,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118302",
+          "rank": 11,
+          "from_address": "12uiddciSU7d5UXozVhp9eKqecXdM9u4Y3",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.0753528,
+          "amount_share": 0.011204,
+          "gnn_risk_score": 0.845346,
+          "locator_score": 0.986434,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118296",
+          "rank": 12,
+          "from_address": "1CWnHBn7CNp9mnNmschDqTzNyUybuEittq",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.07255285,
+          "amount_share": 0.010788,
+          "gnn_risk_score": 0.851627,
+          "locator_score": 0.984947,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118303",
+          "rank": 13,
+          "from_address": "132x9fCqEPhgeCCYaJkBi22UKTLjipqbvk",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.0337129,
+          "amount_share": 0.005013,
+          "gnn_risk_score": 0.829546,
+          "locator_score": 0.980106,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118274",
+          "rank": 14,
+          "from_address": "13M5ve7rHitcohNML9rV2z4bpuWtzWTvJR",
+          "to_address": "bc1qr7p2clfmwq0n5yjn2dzkwu30y2ewd83mujyj79",
+          "amount_btc": 0.01134085,
+          "amount_share": 0.001686,
+          "gnn_risk_score": 0.821037,
+          "locator_score": 0.975868,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "ELEVATED_GRAPH_RISK",
+              "title": "그래프 위험도가 높음",
+              "detail": "주변 주소 관계에서 추가 확인이 필요한 패턴이 발견됐습니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "bfd2e0c98e47d9206a4f294362009dec912acf25daff1750e2be58ee733949f3:118257",
+          "rank": 15,
+          "from_address": "13M5ve7rHitcohNML9rV2z4bpuWtzWTvJR",
+          "to_address": "14Q72bHGJZKTj6UZda84xoBjuX8239EUni",
+          "amount_btc": 0.007152,
+          "amount_share": 0.001063,
+          "gnn_risk_score": 0.679277,
+          "locator_score": 0.927123,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-007",
+      "rank": 7,
+      "txhash": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde",
+      "occurred_at": "2025-03-04T10:06:35+00:00",
+      "risk_score": 0.999387,
+      "risk_level": "critical",
+      "transfer_count": 4,
+      "total_amount_btc": 1.40450192,
+      "recommended_address": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+      "summary": "4개 송금 중 bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.999입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1q0zcpa47m4y05h2yd88uxwf5ffw4sd5gaamhqmk",
+          "role": "sender"
+        },
+        {
+          "id": "bc1q2aqen57a7xgrxrsnr743vqymq5x0dnemr0mldt",
+          "role": "sender"
+        },
+        {
+          "id": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qhpm0dpan40h9sfusqkgsakd5k445rr3fkgrjv6",
+          "role": "sender"
+        },
+        {
+          "id": "bc1qnrqlrm7nxk3w30rr9p9w7qt594ldpslac2hnzx",
+          "role": "sender"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde:113191",
+          "rank": 1,
+          "from_address": "bc1qnrqlrm7nxk3w30rr9p9w7qt594ldpslac2hnzx",
+          "to_address": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+          "amount_btc": 0.6109395,
+          "amount_share": 0.434987,
+          "gnn_risk_score": 0.999305,
+          "locator_score": 0.999448,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde:113195",
+          "rank": 2,
+          "from_address": "bc1q0zcpa47m4y05h2yd88uxwf5ffw4sd5gaamhqmk",
+          "to_address": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+          "amount_btc": 0.48686337,
+          "amount_share": 0.346645,
+          "gnn_risk_score": 0.999387,
+          "locator_score": 0.999183,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde:113192",
+          "rank": 3,
+          "from_address": "bc1qhpm0dpan40h9sfusqkgsakd5k445rr3fkgrjv6",
+          "to_address": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+          "amount_btc": 0.30620088,
+          "amount_share": 0.218014,
+          "gnn_risk_score": 0.999325,
+          "locator_score": 0.995923,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "84b03234ff672199f9c3ee578e5531c93e5065ba35575d1523193bb727ef9dde:113180",
+          "rank": 4,
+          "from_address": "bc1q2aqen57a7xgrxrsnr743vqymq5x0dnemr0mldt",
+          "to_address": "bc1q6d5n2r54mc50r4p9gdfyqe574lugj79dktpy4q",
+          "amount_btc": 0.00049817,
+          "amount_share": 0.000355,
+          "gnn_risk_score": 0.907644,
+          "locator_score": 0.987154,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-008",
+      "rank": 8,
+      "txhash": "d913672c0c3de36b4e1ef47f0f9fa5a57b7a53dd31c821bcb79322eb1a968990",
+      "occurred_at": "2025-03-04T19:22:45+00:00",
+      "risk_score": 0.999306,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 0.08398219,
+      "recommended_address": "bc1q0xwex6f9ej4em5863srhdqmrwjv8cf0euqa0pl7hnagwu38y45nsjvgyc7",
+      "summary": "2개 송금 중 bc1q0xwex6f9ej4em5863srhdqmrwjv8cf0euqa0pl7hnagwu38y45nsjvgyc7로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.999입니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1q0xwex6f9ej4em5863srhdqmrwjv8cf0euqa0pl7hnagwu38y45nsjvgyc7를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1q0xwex6f9ej4em5863srhdqmrwjv8cf0euqa0pl7hnagwu38y45nsjvgyc7",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qkjpg9zke2cr7npc5stf0lckeap45r48j3urg2r",
+          "role": "sender_receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "d913672c0c3de36b4e1ef47f0f9fa5a57b7a53dd31c821bcb79322eb1a968990:116595",
+          "rank": 1,
+          "from_address": "bc1qkjpg9zke2cr7npc5stf0lckeap45r48j3urg2r",
+          "to_address": "bc1q0xwex6f9ej4em5863srhdqmrwjv8cf0euqa0pl7hnagwu38y45nsjvgyc7",
+          "amount_btc": 0.004,
+          "amount_share": 0.047629,
+          "gnn_risk_score": 0.999113,
+          "locator_score": 0.997841,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "d913672c0c3de36b4e1ef47f0f9fa5a57b7a53dd31c821bcb79322eb1a968990:116563",
+          "rank": 2,
+          "from_address": "bc1qkjpg9zke2cr7npc5stf0lckeap45r48j3urg2r",
+          "to_address": "bc1qkjpg9zke2cr7npc5stf0lckeap45r48j3urg2r",
+          "amount_btc": 0.07998219,
+          "amount_share": 0.952371,
+          "gnn_risk_score": 0.999306,
+          "locator_score": 0.961632,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-009",
+      "rank": 9,
+      "txhash": "a95686fc135f8f8b0b4575fb457c3456e7f2cf9d49c4a8852d6e77122a7b7502",
+      "occurred_at": "2025-03-04T12:49:36+00:00",
+      "risk_score": 0.999274,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 0.00022989,
+      "recommended_address": "bc1qnz06cv84gr6yld02avwpzd2cvnf5lxhmnuq62z",
+      "summary": "1개 송금 중 bc1qnz06cv84gr6yld02avwpzd2cvnf5lxhmnuq62z로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.999입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qnz06cv84gr6yld02avwpzd2cvnf5lxhmnuq62z를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1qnz06cv84gr6yld02avwpzd2cvnf5lxhmnuq62z",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qve88jp6l5w2460wl4fgdejdkdk5k9w7gqw9nzn",
+          "role": "sender"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "a95686fc135f8f8b0b4575fb457c3456e7f2cf9d49c4a8852d6e77122a7b7502:113775",
+          "rank": 1,
+          "from_address": "bc1qve88jp6l5w2460wl4fgdejdkdk5k9w7gqw9nzn",
+          "to_address": "bc1qnz06cv84gr6yld02avwpzd2cvnf5lxhmnuq62z",
+          "amount_btc": 0.00022989,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.999274,
+          "locator_score": 0.998962,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-010",
+      "rank": 10,
+      "txhash": "e9aa170a89ed4bae811612dce785ab6114ed6a09e0f7abd448a75f7e7e96a1ea",
+      "occurred_at": "2025-03-04T16:27:00+00:00",
+      "risk_score": 0.998642,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 5.24897628,
+      "recommended_address": "bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev",
+      "summary": "2개 송금 중 bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.999입니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+          "role": "sender_receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "e9aa170a89ed4bae811612dce785ab6114ed6a09e0f7abd448a75f7e7e96a1ea:115084",
+          "rank": 1,
+          "from_address": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+          "to_address": "bc1qmpgugequjgp9z99j2pylf3qpw87fj7vwjfm6ev",
+          "amount_btc": 2.668,
+          "amount_share": 0.50829,
+          "gnn_risk_score": 0.998585,
+          "locator_score": 0.998301,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "e9aa170a89ed4bae811612dce785ab6114ed6a09e0f7abd448a75f7e7e96a1ea:115058",
+          "rank": 2,
+          "from_address": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+          "to_address": "bc1qwumavgafjtu2vleyjaaychge4algvsph3p2esv",
+          "amount_btc": 2.58097628,
+          "amount_share": 0.49171,
+          "gnn_risk_score": 0.998642,
+          "locator_score": 0.716042,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-011",
+      "rank": 11,
+      "txhash": "b86354ce3bfc7765ac0c72501d6db44cd443911ad67bd2c87f79d2c83fc8b4c6",
+      "occurred_at": "2025-03-04T18:50:19+00:00",
+      "risk_score": 0.998523,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 6.21065804,
+      "recommended_address": "bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe",
+      "summary": "1개 송금 중 bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.999입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "1MxZqPVEtVoPG3aHywFGKKRhhgMFkz1TfG",
+          "role": "sender"
+        },
+        {
+          "id": "bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "b86354ce3bfc7765ac0c72501d6db44cd443911ad67bd2c87f79d2c83fc8b4c6:116453",
+          "rank": 1,
+          "from_address": "1MxZqPVEtVoPG3aHywFGKKRhhgMFkz1TfG",
+          "to_address": "bc1q89e5uqu3sacdpsvgwmnedt358zkvj57mwgezxe",
+          "amount_btc": 6.21065804,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.998523,
+          "locator_score": 0.99474,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-012",
+      "rank": 12,
+      "txhash": "c1b899012c756924b988537e8117513bcb3b20765596dd78a8b2297199e2427d",
+      "occurred_at": "2025-03-04T16:51:20+00:00",
+      "risk_score": 0.998375,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 6.2238845,
+      "recommended_address": "bc1q5vcpg2hz089r3vlgh8lt087q4m98klaphq049q",
+      "summary": "1개 송금 중 bc1q5vcpg2hz089r3vlgh8lt087q4m98klaphq049q로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.998입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1q5vcpg2hz089r3vlgh8lt087q4m98klaphq049q를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "1DAg1TpAbY1DuexViGo3dJX441jj32aX7f",
+          "role": "sender"
+        },
+        {
+          "id": "bc1q5vcpg2hz089r3vlgh8lt087q4m98klaphq049q",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "c1b899012c756924b988537e8117513bcb3b20765596dd78a8b2297199e2427d:115215",
+          "rank": 1,
+          "from_address": "1DAg1TpAbY1DuexViGo3dJX441jj32aX7f",
+          "to_address": "bc1q5vcpg2hz089r3vlgh8lt087q4m98klaphq049q",
+          "amount_btc": 6.2238845,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.998375,
+          "locator_score": 0.994726,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-013",
+      "rank": 13,
+      "txhash": "d6da2c186569f481ee780fba16a884ffd091bc896f48c99eb4d5e0f26da0b7e4",
+      "occurred_at": "2025-03-04T19:04:11+00:00",
+      "risk_score": 0.99836,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 6.6947367,
+      "recommended_address": "bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa",
+      "summary": "1개 송금 중 bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.998입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1pd9dsm2t6m9akd5mdrl437xz5z67ew082069dw248ncgpkm52lrjsljaswv",
+          "role": "sender"
+        },
+        {
+          "id": "bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "d6da2c186569f481ee780fba16a884ffd091bc896f48c99eb4d5e0f26da0b7e4:116523",
+          "rank": 1,
+          "from_address": "bc1pd9dsm2t6m9akd5mdrl437xz5z67ew082069dw248ncgpkm52lrjsljaswv",
+          "to_address": "bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa",
+          "amount_btc": 6.6947367,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.99836,
+          "locator_score": 0.994447,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-014",
+      "rank": 14,
+      "txhash": "e1fa35e8c656b8f93a59b395dea7779a04cb3e3f601c19537a88fff753c9ed4a",
+      "occurred_at": "2025-03-06T13:25:21+00:00",
+      "risk_score": 0.998173,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 0.05312167,
+      "recommended_address": "bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2",
+      "summary": "2개 송금 중 bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.997입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1py28kyy30jfdqvd6gmqxupnqehlx7jthz6xfcklrzryvwku8vdk6sjzd3rf",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+          "role": "sender"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "e1fa35e8c656b8f93a59b395dea7779a04cb3e3f601c19537a88fff753c9ed4a:134172",
+          "rank": 1,
+          "from_address": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+          "to_address": "bc1qazpg9c8xn6kgp2fzmfk8u03uu08ecy0lx8spu2",
+          "amount_btc": 0.0531,
+          "amount_share": 0.999592,
+          "gnn_risk_score": 0.996641,
+          "locator_score": 0.999603,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "e1fa35e8c656b8f93a59b395dea7779a04cb3e3f601c19537a88fff753c9ed4a:134173",
+          "rank": 2,
+          "from_address": "bc1qn40ceemt8r8w8juxfzlx39k525dyhrt8d3plas",
+          "to_address": "bc1py28kyy30jfdqvd6gmqxupnqehlx7jthz6xfcklrzryvwku8vdk6sjzd3rf",
+          "amount_btc": 2.167e-05,
+          "amount_share": 0.000408,
+          "gnn_risk_score": 0.998173,
+          "locator_score": 0.99774,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-015",
+      "rank": 15,
+      "txhash": "93496695b0e36d703f7dc8a33699645bd9b55c55f2d4b680f82e768cbae512b9",
+      "occurred_at": "2025-03-05T08:14:40+00:00",
+      "risk_score": 0.998168,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 1.09195102,
+      "recommended_address": "329GVStzB52cE9s6Pbi2cvFtg8ASfrtocR",
+      "summary": "2개 송금 중 329GVStzB52cE9s6Pbi2cvFtg8ASfrtocR로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.995입니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 329GVStzB52cE9s6Pbi2cvFtg8ASfrtocR를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "329GVStzB52cE9s6Pbi2cvFtg8ASfrtocR",
+          "role": "receiver"
+        },
+        {
+          "id": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "role": "sender_receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "93496695b0e36d703f7dc8a33699645bd9b55c55f2d4b680f82e768cbae512b9:121344",
+          "rank": 1,
+          "from_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "to_address": "329GVStzB52cE9s6Pbi2cvFtg8ASfrtocR",
+          "amount_btc": 0.28644,
+          "amount_share": 0.262319,
+          "gnn_risk_score": 0.99522,
+          "locator_score": 0.99776,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "93496695b0e36d703f7dc8a33699645bd9b55c55f2d4b680f82e768cbae512b9:121343",
+          "rank": 2,
+          "from_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "to_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "amount_btc": 0.80551102,
+          "amount_share": 0.737681,
+          "gnn_risk_score": 0.998168,
+          "locator_score": 0.930671,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-016",
+      "rank": 16,
+      "txhash": "449671fa1a660b01ab5eea9d28fa65a52ba5d203b57c31ff4b647cfe00873ecb",
+      "occurred_at": "2025-03-04T04:27:51+00:00",
+      "risk_score": 0.998121,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 1.38959434,
+      "recommended_address": "bc1pednjvtt39g5z95awz4qmcncmk99phjf76fhscaqz22h4mpxvy6ksjzw4du",
+      "summary": "2개 송금 중 bc1pednjvtt39g5z95awz4qmcncmk99phjf76fhscaqz22h4mpxvy6ksjzw4du로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.992입니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1pednjvtt39g5z95awz4qmcncmk99phjf76fhscaqz22h4mpxvy6ksjzw4du를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "role": "sender_receiver"
+        },
+        {
+          "id": "bc1pednjvtt39g5z95awz4qmcncmk99phjf76fhscaqz22h4mpxvy6ksjzw4du",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "449671fa1a660b01ab5eea9d28fa65a52ba5d203b57c31ff4b647cfe00873ecb:111957",
+          "rank": 1,
+          "from_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "to_address": "bc1pednjvtt39g5z95awz4qmcncmk99phjf76fhscaqz22h4mpxvy6ksjzw4du",
+          "amount_btc": 0.29764,
+          "amount_share": 0.214192,
+          "gnn_risk_score": 0.991536,
+          "locator_score": 0.997582,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "449671fa1a660b01ab5eea9d28fa65a52ba5d203b57c31ff4b647cfe00873ecb:111955",
+          "rank": 2,
+          "from_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "to_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "amount_btc": 1.09195434,
+          "amount_share": 0.785808,
+          "gnn_risk_score": 0.998121,
+          "locator_score": 0.925486,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-017",
+      "rank": 17,
+      "txhash": "5b4eadc8df4f4a7e4955cacceac756774bc324d69bb0036eb8287b45cd75363d",
+      "occurred_at": "2025-03-06T06:00:44+00:00",
+      "risk_score": 0.998024,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 0.8055077,
+      "recommended_address": "39egqgPgicp7FTxBHwbbqg39xEpS2JpbAx",
+      "summary": "2개 송금 중 39egqgPgicp7FTxBHwbbqg39xEpS2JpbAx로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.997입니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 39egqgPgicp7FTxBHwbbqg39xEpS2JpbAx를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "39egqgPgicp7FTxBHwbbqg39xEpS2JpbAx",
+          "role": "receiver"
+        },
+        {
+          "id": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "role": "sender_receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "5b4eadc8df4f4a7e4955cacceac756774bc324d69bb0036eb8287b45cd75363d:132775",
+          "rank": 1,
+          "from_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "to_address": "39egqgPgicp7FTxBHwbbqg39xEpS2JpbAx",
+          "amount_btc": 0.01,
+          "amount_share": 0.012415,
+          "gnn_risk_score": 0.997023,
+          "locator_score": 0.997727,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "5b4eadc8df4f4a7e4955cacceac756774bc324d69bb0036eb8287b45cd75363d:132817",
+          "rank": 2,
+          "from_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "to_address": "3Ek2GAADMbWmvzuP62voWD8bGmPYX2dado",
+          "amount_btc": 0.7955077,
+          "amount_share": 0.987585,
+          "gnn_risk_score": 0.998024,
+          "locator_score": 0.944103,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-018",
+      "rank": 18,
+      "txhash": "e44f3e63f0d964264b0363cc1b67400cb2e1d2d6aa7136f9e64629221d386219",
+      "occurred_at": "2025-03-04T10:06:35+00:00",
+      "risk_score": 0.997962,
+      "risk_level": "critical",
+      "transfer_count": 2,
+      "total_amount_btc": 60.63103323,
+      "recommended_address": "bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m",
+      "summary": "2개 송금 중 bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.998입니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m",
+          "role": "receiver"
+        },
+        {
+          "id": "bc1qu8mvqszp8rnzv8tudd3es207hzcw9cv0mmr7f3",
+          "role": "sender_receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "e44f3e63f0d964264b0363cc1b67400cb2e1d2d6aa7136f9e64629221d386219:113164",
+          "rank": 1,
+          "from_address": "bc1qu8mvqszp8rnzv8tudd3es207hzcw9cv0mmr7f3",
+          "to_address": "bc1qsfhdhr5d09zt0zvvwtfm4dyayhcefg8ezxv48m",
+          "amount_btc": 0.60964864,
+          "amount_share": 0.010055,
+          "gnn_risk_score": 0.997962,
+          "locator_score": 0.996686,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "e44f3e63f0d964264b0363cc1b67400cb2e1d2d6aa7136f9e64629221d386219:113165",
+          "rank": 2,
+          "from_address": "bc1qu8mvqszp8rnzv8tudd3es207hzcw9cv0mmr7f3",
+          "to_address": "bc1qu8mvqszp8rnzv8tudd3es207hzcw9cv0mmr7f3",
+          "amount_btc": 60.02138459,
+          "amount_share": 0.989945,
+          "gnn_risk_score": 0.015092,
+          "locator_score": 0.000865,
+          "recommended": false,
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "case_id": "case-019",
+      "rank": 19,
+      "txhash": "b2aabfaa6a2cbcf838d8edc9f57e3fbb75a2348f53fa050f35923d5cfa804ad3",
+      "occurred_at": "2025-03-04T19:00:39+00:00",
+      "risk_score": 0.997806,
+      "risk_level": "critical",
+      "transfer_count": 1,
+      "total_amount_btc": 8.75749902,
+      "recommended_address": "bc1qwngccl0mgr7a5hflvdn4j2uje9hj4suh3eg4gc",
+      "summary": "1개 송금 중 bc1qwngccl0mgr7a5hflvdn4j2uje9hj4suh3eg4gc로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.998입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 100.0%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qwngccl0mgr7a5hflvdn4j2uje9hj4suh3eg4gc를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "bc1p9pmx0289la0hyxwmxrujgp7allh0ahekxn384lvkeu0ks3akxr0qdqdwz6",
+          "role": "sender"
+        },
+        {
+          "id": "bc1qwngccl0mgr7a5hflvdn4j2uje9hj4suh3eg4gc",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "b2aabfaa6a2cbcf838d8edc9f57e3fbb75a2348f53fa050f35923d5cfa804ad3:116475",
+          "rank": 1,
+          "from_address": "bc1p9pmx0289la0hyxwmxrujgp7allh0ahekxn384lvkeu0ks3akxr0qdqdwz6",
+          "to_address": "bc1qwngccl0mgr7a5hflvdn4j2uje9hj4suh3eg4gc",
+          "amount_btc": 8.75749902,
+          "amount_share": 1.0,
+          "gnn_risk_score": 0.997806,
+          "locator_score": 0.993232,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case-020",
+      "rank": 20,
+      "txhash": "0235e9e35f7468b1222098eeb7a8cd20b9a59229b2b76cafe59ef78ed3de1b06",
+      "occurred_at": "2025-03-05T18:39:58+00:00",
+      "risk_score": 0.997743,
+      "risk_level": "critical",
+      "transfer_count": 4,
+      "total_amount_btc": 0.00062475,
+      "recommended_address": "bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff",
+      "summary": "4개 송금 중 bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff로 전달된 출력을 우선 조사 대상으로 추천합니다.",
+      "evidence": [
+        {
+          "code": "GNN_PRIORITY",
+          "title": "GNN 조사 우선순위",
+          "detail": "거래 내 최고 위험 점수는 0.997입니다."
+        },
+        {
+          "code": "HIGH_EXTERNAL_SHARE",
+          "title": "외부 전달 비율이 높음",
+          "detail": "거래 금액의 97.7%가 외부 주소로 전달됐습니다."
+        },
+        {
+          "code": "LOCATOR_TARGET",
+          "title": "우선 조사 대상 특정",
+          "detail": "수신 주소 bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff를 가장 먼저 확인해야 합니다."
+        }
+      ],
+      "nodes": [
+        {
+          "id": "38nKMtSjgYwpq2qx2vuLfZ7Nx6qiwDsUau",
+          "role": "sender_receiver"
+        },
+        {
+          "id": "bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff",
+          "role": "receiver"
+        }
+      ],
+      "transfers": [
+        {
+          "id": "0235e9e35f7468b1222098eeb7a8cd20b9a59229b2b76cafe59ef78ed3de1b06:130444",
+          "rank": 1,
+          "from_address": "38nKMtSjgYwpq2qx2vuLfZ7Nx6qiwDsUau",
+          "to_address": "bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff",
+          "amount_btc": 0.00035681,
+          "amount_share": 0.571124,
+          "gnn_risk_score": 0.997261,
+          "locator_score": 0.999665,
+          "recommended": true,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            }
+          ]
+        },
+        {
+          "id": "0235e9e35f7468b1222098eeb7a8cd20b9a59229b2b76cafe59ef78ed3de1b06:130470",
+          "rank": 2,
+          "from_address": "38nKMtSjgYwpq2qx2vuLfZ7Nx6qiwDsUau",
+          "to_address": "bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff",
+          "amount_btc": 0.00024529,
+          "amount_share": 0.392621,
+          "gnn_risk_score": 0.997468,
+          "locator_score": 0.999426,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SECOND_LARGEST_OUTPUT",
+              "title": "두 번째로 큰 출력",
+              "detail": "Bybit 데이터에서 자금세탁 라벨이 자주 나타난 거래 내부 위치입니다."
+            }
+          ]
+        },
+        {
+          "id": "0235e9e35f7468b1222098eeb7a8cd20b9a59229b2b76cafe59ef78ed3de1b06:130446",
+          "rank": 3,
+          "from_address": "38nKMtSjgYwpq2qx2vuLfZ7Nx6qiwDsUau",
+          "to_address": "bc1qmwyvpgmejm04al3jjtjgpunk3p2q42sx3rlcff",
+          "amount_btc": 8.5e-06,
+          "amount_share": 0.013605,
+          "gnn_risk_score": 0.997171,
+          "locator_score": 0.993243,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "EXTERNAL_RECIPIENT",
+              "title": "외부 주소로 전달",
+              "detail": "송신 주소와 다른 주소로 자금이 이동했습니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        },
+        {
+          "id": "0235e9e35f7468b1222098eeb7a8cd20b9a59229b2b76cafe59ef78ed3de1b06:130445",
+          "rank": 4,
+          "from_address": "38nKMtSjgYwpq2qx2vuLfZ7Nx6qiwDsUau",
+          "to_address": "38nKMtSjgYwpq2qx2vuLfZ7Nx6qiwDsUau",
+          "amount_btc": 1.415e-05,
+          "amount_share": 0.022649,
+          "gnn_risk_score": 0.997743,
+          "locator_score": 0.723967,
+          "recommended": false,
+          "reasons": [
+            {
+              "code": "HIGH_GRAPH_RISK",
+              "title": "그래프 위험도가 매우 높음",
+              "detail": "연결 주소의 거래 행동과 주변 자금 흐름이 위험 패턴과 유사합니다."
+            },
+            {
+              "code": "SPLIT_OUTPUT",
+              "title": "분할 송금",
+              "detail": "전체 거래 금액의 10% 이하로 분리된 출력입니다."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

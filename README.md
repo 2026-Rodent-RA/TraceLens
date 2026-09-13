@@ -48,9 +48,12 @@ python ml/graph/build_bybit_graph.py
 python ml/training/train_rf_bybit.py
 python ml/training/train_gnn_bybit.py
 python ml/inference/export_gnn_scores.py
+python ml/inference/build_demo_cases.py --limit 20
 python ml/training/train_locator_bybit.py
 python ml/training/train_stacked_locator.py
 python ml/evaluation/compare_baselines.py
 ```
+
+데모용 조사 결과는 `demo/data/investigation_cases.json`에 생성됩니다. 프론트엔드와 백엔드는 `schemas/investigation_cases.schema.json`을 데이터 계약으로 사용합니다.
 
 대용량 원본 데이터와 학습 산출물은 Git에 포함하지 않습니다.

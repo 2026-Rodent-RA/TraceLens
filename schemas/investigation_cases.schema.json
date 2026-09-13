@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tracelens.local/schemas/investigation-cases.json",
+  "title": "TraceLens Investigation Cases",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "model", "case_count", "cases"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "model": {
+      "type": "object",
+      "required": ["detector", "locator", "dataset"],
+      "properties": {
+        "detector": { "type": "string" },
+        "locator": { "type": "string" },
+        "dataset": { "type": "string" }
+      }
+    },
+    "case_count": { "type": "integer", "minimum": 0 },
+    "cases": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "$defs": {
+    "reason": {
+      "type": "object",
+      "required": ["code", "title", "detail"],
+      "properties": {
+        "code": { "type": "string" },
+        "title": { "type": "string" },
+        "detail": { "type": "string" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "role"],
+      "properties": {
+        "id": { "type": "string" },
+        "role": {
+          "enum": ["sender", "receiver", "sender_receiver"]
+        }
+      }
+    },
+    "transfer": {
+      "type": "object",
+      "required": [
+        "id", "rank", "from_address", "to_address",
+        "amount_btc", "amount_share", "gnn_risk_score",
+        "locator_score", "recommended", "reasons"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "rank": { "type": "integer", "minimum": 1 },
+        "from_address": { "type": "string" },
+        "to_address": { "type": "string" },
+        "amount_btc": { "type": "number", "minimum": 0 },
+        "amount_share": { "type": "number", "minimum": 0 },
+        "gnn_risk_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "locator_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "recommended": { "type": "boolean" },
+        "reasons": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/reason" }
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": [
+        "case_id", "rank", "txhash", "occurred_at",
+        "risk_score", "risk_level", "transfer_count",
+        "total_amount_btc", "recommended_address", "summary",
+        "evidence", "nodes", "transfers"
+      ],
+      "properties": {
+        "case_id": { "type": "string" },
+        "rank": { "type": "integer", "minimum": 1 },
+        "txhash": { "type": "string" },
+        "occurred_at": { "type": "string", "format": "date-time" },
+        "risk_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "risk_level": { "enum": ["critical", "high", "medium", "low"] },
+        "transfer_count": { "type": "integer", "minimum": 1 },
+        "total_amount_btc": { "type": "number", "minimum": 0 },
+        "recommended_address": { "type": "string" },
+        "summary": { "type": "string" },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/reason" }
+        },
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        },
+        "transfers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/transfer" }
+        }
+      }
+    }
+  }
+}

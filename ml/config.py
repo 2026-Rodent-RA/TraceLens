@@ -30,6 +30,11 @@ SCORE_DIR = OUTPUT_DIR / "scores"
 RANKING_DIR = OUTPUT_DIR / "rankings"
 REPORT_DIR = OUTPUT_DIR / "reports"
 
+DEMO_DATA_DIR = PROJECT_DIR / "demo" / "data"
+DEMO_CASES_PATH = (
+    DEMO_DATA_DIR / "investigation_cases.json"
+)
+
 
 def create_output_directories():
     for directory in [
