@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -7,11 +10,15 @@ from sklearn.metrics import average_precision_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-from bybit_data import (
-    FEATURE_COLUMNS,
-    PROJECT_DIR,
-    prepare_data,
-)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+
+from ml.config import REPORT_DIR
+from ml.datasets.bybit import prepare_bybit_data
+from ml.features.transaction import FEATURE_COLUMNS
 
 
 def calculate_metrics(labels, scores):
@@ -96,7 +103,7 @@ def calculate_transaction_metrics(data, scores):
 
 
 def main():
-    train, _, test = prepare_data()
+    train, _, test = prepare_bybit_data()
 
     X_train = train[FEATURE_COLUMNS]
     y_train = train["label"]
@@ -196,12 +203,7 @@ def main():
     print("\n=== 베이스라인 비교 ===")
     print(comparison.round(4).to_string())
 
-    output_path = (
-        PROJECT_DIR
-        / "ml"
-        / "outputs"
-        / "baseline_comparison.csv"
-    )
+    output_path = REPORT_DIR / "baseline_comparison.csv"
 
     output_path.parent.mkdir(
         parents=True,

@@ -13,23 +13,20 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 
-from ml.models.graphsage_edge import GraphSAGEEdgeClassifier
-from ml.training.bybit_data import PROJECT_DIR, prepare_data
-from ml.training.evaluation import (
+from ml.config import BYBIT_GRAPH_PATH, MODEL_DIR
+from ml.datasets.bybit import prepare_bybit_data
+from ml.evaluation.metrics import (
     evaluate_classification,
     evaluate_ranking,
     evaluate_transaction_ranking,
     find_best_threshold,
 )
+from ml.models.graphsage_edge import GraphSAGEEdgeClassifier
 
 
 USE_GRAPH_MESSAGES = True
 GRAPH_PATH = (
-    PROJECT_DIR
-    / "ml"
-    / "data"
-    / "processed"
-    / "bybit_graph.pt"
+    BYBIT_GRAPH_PATH
 )
 
 model_filename = (
@@ -39,10 +36,7 @@ model_filename = (
 )
 
 model_path = (
-    PROJECT_DIR
-    / "ml"
-    / "outputs"
-    / model_filename
+    MODEL_DIR / model_filename
 )
 
 def select_edges(graph, split_id):
@@ -280,7 +274,7 @@ def main():
         best_threshold,
     )
 
-    _, _, test_data = prepare_data()
+    _, _, test_data = prepare_bybit_data()
 
     ranked_test = evaluate_ranking(
         test_data,
@@ -302,7 +296,7 @@ def main():
             "model_state_dict": model.state_dict(),
             "feature_mean": feature_mean,
             "feature_std": feature_std,
-            "threshold": best_threshold,
+            "threshold": float(best_threshold),
         },
         model_path,
     )

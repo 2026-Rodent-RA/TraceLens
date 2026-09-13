@@ -1,25 +1,30 @@
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from evaluation import (
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+
+from ml.config import RANKING_DIR
+from ml.datasets.bybit import prepare_bybit_data
+from ml.evaluation.metrics import (
     evaluate_classification,
     evaluate_ranking,
     evaluate_transaction_ranking,
     find_best_threshold,
 )
 
-from bybit_data import (
-    FEATURE_COLUMNS,
-    PROJECT_DIR,
-    prepare_data,
-)
+from ml.features.transaction import FEATURE_COLUMNS
 
 
 def main():
 
-    train, validation, test = prepare_data()
+    train, validation, test = prepare_bybit_data()
 
     
     X_train = train[FEATURE_COLUMNS]
@@ -106,19 +111,18 @@ def main():
         test_probabilities,
     )
 
-    OUTPUT_DIR = PROJECT_DIR / "ml" / "outputs"
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    RANKING_DIR.mkdir(parents=True, exist_ok=True)
 
     ranked_test["rank"] = np.arange(1, len(ranked_test) + 1)
 
     ranked_test.head(1000).to_csv(
-        OUTPUT_DIR / "rf_bybit_top1000.csv",
+        RANKING_DIR / "rf_bybit_top1000.csv",
         index=False,
     )
 
     print(
         "\n조사 우선순위 저장:",
-        OUTPUT_DIR / "rf_bybit_top1000.csv",
+        RANKING_DIR / "rf_bybit_top1000.csv",
     )
 
 

@@ -14,11 +14,9 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 
-from ml.config import MODEL_DIR
+from ml.config import MODEL_DIR, SCORE_DIR
 from ml.datasets.bybit import prepare_bybit_data
-from ml.evaluation.metrics import (
-    evaluate_transaction_ranking,
-)
+from ml.evaluation.metrics import evaluate_transaction_ranking
 from ml.features.locator import (
     LOCATOR_FEATURES,
     add_locator_features,
@@ -26,26 +24,51 @@ from ml.features.locator import (
 )
 
 
-def main():
-    train, validation, test = prepare_bybit_data()
+SCORE_PATH = (
+    SCORE_DIR / "gnn_scores.npz"
+)
 
-    train = add_locator_features(train)
+OUTPUT_PATH = (
+    MODEL_DIR / "stacked_locator.joblib"
+)
+
+STACKED_FEATURES = [
+    *LOCATOR_FEATURES,
+    "gnn_risk_score",
+]
+
+
+def main():
+    _, validation, test = prepare_bybit_data()
+
     validation = add_locator_features(validation)
     test = add_locator_features(test)
 
-    pair_features, pair_labels = (
-        build_pairwise_dataset(train)
+    gnn_scores = np.load(SCORE_PATH)
+
+    validation_scores = gnn_scores[
+        "validation_scores"
+    ]
+
+    test_scores = gnn_scores[
+        "test_scores"
+    ]
+
+    assert len(validation) == len(validation_scores)
+    assert len(test) == len(test_scores)
+
+    validation["gnn_risk_score"] = validation_scores
+    test["gnn_risk_score"] = test_scores
+
+    # GNN 학습에 사용되지 않은 Validation 점수로
+    # 2단계 Locator를 학습한다.
+    pair_features, pair_labels = build_pairwise_dataset(
+        validation,
+        feature_columns=STACKED_FEATURES,
     )
 
-    print("=== Pairwise Locator 학습 ===")
+    print("=== GNN Stacked Locator ===")
     print(f"학습 비교 쌍: {len(pair_labels)}")
-    print(
-        "Train 혼합 거래:",
-        train.groupby("txhash")["label"]
-        .nunique()
-        .gt(1)
-        .sum(),
-    )
 
     locator = make_pipeline(
         StandardScaler(),
@@ -61,27 +84,16 @@ def main():
         pair_labels,
     )
 
-    validation_scores = locator.decision_function(
-        validation[LOCATOR_FEATURES]
+    locator_scores = locator.decision_function(
+        test[STACKED_FEATURES].to_numpy()
     )
 
-    test_scores = locator.decision_function(
-        test[LOCATOR_FEATURES]
-    )
-
-    print("\n=== Pairwise Locator Validation ===")
-    evaluate_transaction_ranking(
-        validation,
-        validation_scores,
-    )
-
-    print("\n=== Pairwise Locator Test ===")
+    print("\n=== Stacked Locator Test ===")
     evaluate_transaction_ranking(
         test,
-        test_scores,
+        locator_scores,
     )
 
-    # 기존 최강 규칙과 동일한 데이터에서 비교
     normalized_amount = (
         test["log_amount"]
         - test["log_amount"].min()
@@ -102,22 +114,15 @@ def main():
         rule_scores,
     )
 
-    output_path = MODEL_DIR / "locator_pairwise.joblib"
-
-    output_path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
     joblib.dump(
         {
             "model": locator,
-            "features": LOCATOR_FEATURES,
+            "features": STACKED_FEATURES,
         },
-        output_path,
+        OUTPUT_PATH,
     )
 
-    print(f"\nLocator 저장: {output_path}")
+    print(f"\nLocator 저장: {OUTPUT_PATH}")
 
 
 if __name__ == "__main__":

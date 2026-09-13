@@ -1,15 +1,19 @@
+import sys
 from pathlib import Path
 
 import pandas as pd
 
 
-DATA_PATH = (
-    Path(__file__).resolve().parent
-    / "data"
-    / "raw"
-    / "Bybit_BC"
-    / "Tx_info_Bitcoin.csv"
-)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+
+from ml.config import BYBIT_TRANSACTION_PATH
+
+
+DATA_PATH = BYBIT_TRANSACTION_PATH
 
 USE_COLUMNS = [
     "txhash",
