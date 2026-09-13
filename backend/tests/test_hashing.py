@@ -8,10 +8,10 @@ import copy
 def run_test():
     base_content = {
         "analysis_id": "analysis-001",
-        "dataset": "Elliptic",
+        "dataset": "Bybit-BC",
         "target_transaction": "tx-1024",
-        "model_name": "GCN",
-        "model_version": "mock-gcn-v1",
+        "model_name": "GraphSAGE + Stacked Locator",
+        "model_version": "mvp-1.0",
         "prediction_score": 0.87,
         "prediction_level": "HIGH",
         "recommended_edges": [

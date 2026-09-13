@@ -34,6 +34,8 @@ DEMO_DATA_DIR = PROJECT_DIR / "demo" / "data"
 DEMO_CASES_PATH = (
     DEMO_DATA_DIR / "investigation_cases.json"
 )
+BACKEND_CASES_DIR = PROJECT_DIR / "demo" / "backend_cases"
+FRONTEND_DEMO_DIR = PROJECT_DIR / "frontend" / "public" / "demo"
 
 
 def create_output_directories():

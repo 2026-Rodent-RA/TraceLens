@@ -1,8 +1,7 @@
 """backend/app/services/analysis_service.py
-Mock AI 분석 데이터를 로드하고 제공하는 서비스.
+AI 분석 데이터를 로드하고 제공하는 서비스.
 
-Data source: config.settings.analysis_data_dir (기본값: mock/)
-향후 ml/outputs/ 로 교체할 때는 ANALYSIS_DATA_DIR 환경변수만 변경하면 됩니다.
+Data source: config.settings.analysis_data_dir
 """
 import json
 from pathlib import Path
@@ -21,7 +20,7 @@ def _load_all_analyses() -> list[AnalysisResult]:
         raise FileNotFoundError(
             f"Analysis data directory not found: {data_dir}\n"
             f"현재 ANALYSIS_DATA_DIR={data_dir}\n"
-            f"mock/ 디렉토리가 존재하는지 확인하세요."
+            f"ML 사건 JSON을 먼저 생성했는지 확인하세요."
         )
 
     for json_file in sorted(data_dir.glob("analysis-*.json")):

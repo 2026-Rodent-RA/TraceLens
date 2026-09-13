@@ -1,0 +1,43 @@
+{
+  "analysis_id": "analysis-013",
+  "dataset": "Bybit-BC",
+  "target_transaction": "d6da2c186569f481ee780fba16a884ffd091bc896f48c99eb4d5e0f26da0b7e4",
+  "prediction": {
+    "score": 0.99836,
+    "level": "HIGH"
+  },
+  "model": {
+    "name": "GraphSAGE + Stacked Locator",
+    "version": "mvp-1.0"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "bc1pd9dsm2t6m9akd5mdrl437xz5z67ew082069dw248ncgpkm52lrjsljaswv"
+      },
+      {
+        "id": "bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa"
+      }
+    ],
+    "edges": [
+      {
+        "source": "bc1pd9dsm2t6m9akd5mdrl437xz5z67ew082069dw248ncgpkm52lrjsljaswv",
+        "target": "bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa"
+      }
+    ]
+  },
+  "recommended_edges": [
+    {
+      "source": "bc1pd9dsm2t6m9akd5mdrl437xz5z67ew082069dw248ncgpkm52lrjsljaswv",
+      "target": "bc1q67pcuharjsvslw4w34rqtpqmddlu20ns0ztgxa",
+      "rank": 1,
+      "score_drop": 0.99836
+    }
+  ],
+  "validation": {
+    "original_score": 0.99836,
+    "recommended_removed_score": 0.0,
+    "random_removed_score": 0.0
+  },
+  "status": "PENDING_REVIEW"
+}

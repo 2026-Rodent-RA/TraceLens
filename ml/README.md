@@ -1,41 +1,43 @@
-# ml/ — AI / Data (Team Member A)
+# TraceLens ML
 
-이 디렉토리는 **팀원 A**가 담당하는 AI / Machine Learning 영역입니다.
+Bybit-BC 전송 데이터로 고위험 거래를 탐지하고, 거래 내부에서 조사할 주소 연결을 순위화합니다.
 
-## 담당 업무
+## 구성
 
-| 항목 | 설명 |
+| 단계 | 구현 |
 |---|---|
-| Dataset | Elliptic Dataset 처리 및 전처리 |
-| 모델 | Random Forest, GCN |
-| 분석 | 대상 거래 분석, 중요 거래 연결 추천 |
-| Edge Ablation | 모델 판단에 미치는 영향 측정 |
-| 출력 | 최종 AI 분석 결과 JSON 생성 |
+| 데이터·특징 | 전송 금액, 거래 내부 순위·비율, 주소 활동 및 시간 특징 |
+| 위험 탐지 | GraphSAGE 기반 edge classifier |
+| 위치 추천 | GNN 점수를 결합한 Stacked Pairwise Locator |
+| 평가 | PR-AUC, Precision/Recall@K, Hit@K, MRR |
+| 서비스 출력 | 조사 사건 JSON과 백엔드 호환 `analysis-*.json` |
 
-## 예정 구조
+## 주요 디렉토리
 
-```
+```text
 ml/
-├── data/
-│   ├── raw/        # 원본 Dataset (Git 미포함, .gitignore 처리)
-│   └── processed/  # 전처리된 데이터
-├── notebooks/      # 실험용 Jupyter Notebook
-├── src/            # 모델 코드
-└── outputs/        # AI 분석 결과 JSON (Backend에서 읽는 위치)
+├── datasets/       # 데이터 로더와 시간 분할
+├── features/       # 거래·주소·Locator 특징
+├── graph/          # PyTorch Geometric 그래프 생성
+├── models/         # GraphSAGE edge 모델
+├── training/       # RF, GNN, Locator 학습
+├── evaluation/     # 모델 및 조사 순위 평가
+├── inference/      # 점수 추출과 데모 JSON 생성
+└── outputs/        # 로컬 모델·점수·평가 결과(Git 제외)
 ```
 
-## 현재 상태
+## MVP JSON 생성
 
-AI 팀원과의 Output Schema가 아직 확정되지 않았습니다.
+프로젝트 루트에서 ML 환경을 활성화한 뒤 실행합니다.
 
-현재 서비스 개발에는 `mock/` 디렉토리의 임시 데이터를 사용합니다.
+```powershell
+python ml/inference/build_demo_cases.py
+python ml/inference/export_backend_cases.py
+```
 
-AI 팀원이 실제 분석 결과를 `ml/outputs/`에 배치하면,
-Backend의 환경변수 `ANALYSIS_DATA_DIR`을 변경하는 것만으로
-Mock 데이터에서 실제 AI 출력으로 교체할 수 있습니다.
+생성 결과:
 
-## 주의사항
+- `demo/data/investigation_cases.json`: ML 정보가 포함된 전체 조사 사건 묶음
+- `demo/backend_cases/analysis-*.json`: FastAPI와 React가 사용하는 사건별 JSON
 
-- `ml/data/raw/` 는 Git에 포함되지 않습니다
-- `ml/outputs/` 는 Git에 포함되지 않습니다 (용량 및 보안)
-- AI 모델 코드를 Frontend/Backend 팀이 임의로 추가하지 않습니다
+원본 데이터와 학습 산출물인 `ml/data`, `ml/outputs`는 Git에 포함하지 않습니다.

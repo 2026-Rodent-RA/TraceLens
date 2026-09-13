@@ -1,7 +1,7 @@
 # backend/app/config.py
 """
 Application configuration.
-ANALYSIS_DATA_DIR 환경변수 하나만 바꾸면 mock/ → ml/outputs/ 교체 가능.
+ANALYSIS_DATA_DIR 환경변수로 AI 분석 JSON 경로를 교체할 수 있습니다.
 DATABASE_URL 환경변수 하나로 SQLite(Local) / PostgreSQL(Production) 전환 가능.
 """
 from pathlib import Path
@@ -9,8 +9,12 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # Data source: 개발 초기에는 mock/ 사용, AI 출력 완성 후 ml/outputs 로 변경
-    analysis_data_dir: Path = Path(__file__).parent.parent.parent / "mock"
+    # Data source: ML 파이프라인이 내보낸 백엔드 호환 사건 JSON
+    analysis_data_dir: Path = (
+        Path(__file__).resolve().parents[2]
+        / "demo"
+        / "backend_cases"
+    )
 
     backend_host: str = "0.0.0.0"
     backend_port: int = 8000

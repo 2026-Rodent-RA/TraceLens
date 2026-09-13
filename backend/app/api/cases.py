@@ -12,7 +12,7 @@ router = APIRouter(prefix="/api/cases", tags=["cases"])
 @router.get("", response_model=list[CaseSummary])
 def list_cases():
     """
-    Mock AI 분석 케이스 목록을 반환합니다.
+    AI 분석 케이스 목록을 반환합니다.
     Dashboard Case Card 표시용.
     """
     return get_all_cases()
