@@ -1,8 +1,10 @@
 // frontend/src/pages/Verify.tsx
 import { useState, useRef } from "react";
-import { verifyExternalReport } from "../services/api";
+import { verifyReport } from "../services/api";
+import { useApp } from "../i18n/context";
 
 export default function Verify() {
+  const { t } = useApp();
   const [fileData, setFileData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [verification, setVerification] = useState<any>(null);
@@ -41,7 +43,7 @@ export default function Verify() {
     setLoading(true);
     setError(null);
     try {
-      const res = await verifyExternalReport(fileData);
+      const res = await verifyReport(fileData);
       setVerification(res);
     } catch (err: any) {
       setError(err.message);
@@ -59,8 +61,8 @@ export default function Verify() {
   return (
     <main className="main-content">
       <div className="page-header" style={{ marginBottom: "var(--space-6)" }}>
-        <h1 className="page-title">External Report Verification</h1>
-        <p className="page-subtitle">Verify an Investigation Report JSON file provided by another institution.</p>
+        <h1 className="page-title">{t("verify.title")}</h1>
+        <p className="page-subtitle">{t("verify.subtitle")}</p>
       </div>
 
       <div style={{ 
@@ -85,8 +87,8 @@ export default function Verify() {
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          <h3 style={{ marginBottom: "var(--space-2)" }}>Upload Report JSON</h3>
-          <p style={{ color: "var(--color-text-muted)", fontSize: "var(--text-sm)" }}>Click to browse or drag and drop a TraceLens Report file</p>
+          <h3 style={{ marginBottom: "var(--space-2)" }}>{t("verify.upload")}</h3>
+          <p style={{ color: "var(--color-text-muted)", fontSize: "var(--text-sm)" }}>{t("verify.upload_desc")}</p>
           <input 
             type="file" 
             accept=".json" 
@@ -106,14 +108,14 @@ export default function Verify() {
         {fileData && (
           <div className="panel-section" style={{ background: "var(--color-bg-elevated)" }}>
             <h3 style={{ borderBottom: "1px solid var(--color-border)", paddingBottom: "var(--space-2)", marginBottom: "var(--space-4)" }}>
-              Report Preview
+              {t("verify.preview")}
             </h3>
             <table className="report-table" style={{ width: "100%", textAlign: "left", fontSize: "var(--text-sm)", marginBottom: "var(--space-6)" }}>
               <tbody>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>Report ID</th><td>{fileData.report_id}</td></tr>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>Target Transaction</th><td>{fileData.content?.target_transaction}</td></tr>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>Risk Level</th><td>{fileData.content?.prediction_level}</td></tr>
-                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>Expected Hash</th><td style={{ fontFamily: "var(--font-mono)", fontSize: "12px" }}>{fileData.report_hash}</td></tr>
+                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("report.analysis_id")}</th><td>{fileData.report_id}</td></tr>
+                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("report.target_tx")}</th><td>{fileData.content?.target_transaction}</td></tr>
+                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("dashboard.card.risk")}</th><td>{fileData.content?.prediction_level}</td></tr>
+                <tr><th style={{ padding: "var(--space-2) 0", color: "var(--color-text-secondary)" }}>{t("report.hash_expected")}</th><td style={{ fontFamily: "var(--font-mono)", fontSize: "12px" }}>{fileData.report_hash}</td></tr>
               </tbody>
             </table>
 
@@ -124,7 +126,7 @@ export default function Verify() {
                 onClick={handleVerify}
                 disabled={loading}
               >
-                {loading ? "Verifying..." : "Verify via Blockchain"}
+                {loading ? "Verifying..." : t("verify.verify_btn")}
               </button>
             </div>
           </div>
@@ -148,7 +150,7 @@ export default function Verify() {
               {verification.status === "VERIFIED" && "✅ "}
               {verification.status === "REVOKED" && "⚠️ "}
               {(verification.status === "TAMPERED" || verification.status === "HASH_MISMATCH" || verification.status === "NOT_VERIFIED") && "❌ "}
-              Result: {verification.status}
+              {t("verify.result")} {verification.status}
             </h2>
             <p style={{ color: "var(--color-text-primary)", fontSize: "var(--text-base)", marginBottom: "var(--space-4)" }}>
               {verification.message}
@@ -156,11 +158,11 @@ export default function Verify() {
             
             <div style={{ background: "var(--color-bg-base)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", fontSize: "var(--text-sm)", fontFamily: "var(--font-mono)" }}>
               <div style={{ marginBottom: "var(--space-2)" }}>
-                <strong style={{ color: "var(--color-text-secondary)" }}>Expected Hash (from file):</strong><br/>
+                <strong style={{ color: "var(--color-text-secondary)" }}>{t("verify.hash_file")}</strong><br/>
                 {fileData.report_hash}
               </div>
               <div style={{ marginBottom: "var(--space-2)" }}>
-                <strong style={{ color: "var(--color-text-secondary)" }}>Computed Hash (from content):</strong><br/>
+                <strong style={{ color: "var(--color-text-secondary)" }}>{t("verify.hash_content")}</strong><br/>
                 <span style={{ color: verification.current_hash === fileData.report_hash ? "var(--color-text-primary)" : "var(--color-risk-high)" }}>
                   {verification.current_hash}
                 </span>
@@ -168,7 +170,7 @@ export default function Verify() {
               
               {verification.on_chain_issuer && (
                 <div style={{ marginTop: "var(--space-4)" }}>
-                  <strong style={{ color: "var(--color-text-secondary)" }}>On-Chain Issuer:</strong><br/>
+                  <strong style={{ color: "var(--color-text-secondary)" }}>{t("verify.on_chain_issuer")}</strong><br/>
                   {verification.on_chain_issuer}
                 </div>
               )}

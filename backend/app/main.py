@@ -6,14 +6,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.api.cases import router as cases_router
-from app.api.reviews import router as reviews_router
-from app.repositories.store import init_db
+from app.api.reports import router as reports_router
+from app.api.attestation import router as attestation_router
 
 app = FastAPI(
     title="TraceLens API",
     description="AI-assisted On-chain Investigation Platform — Backend API",
-    version="0.1.0",
-    on_startup=[init_db]
+    version="0.1.0"
 )
 
 # CORS — Frontend(localhost:5173)에서 접근 허용
@@ -27,7 +26,8 @@ app.add_middleware(
 
 # Routers
 app.include_router(cases_router)
-app.include_router(reviews_router)
+app.include_router(reports_router)
+app.include_router(attestation_router)
 
 
 @app.get("/health")

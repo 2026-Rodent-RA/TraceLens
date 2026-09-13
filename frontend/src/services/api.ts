@@ -24,31 +24,12 @@ export function getCaseById(analysisId: string): Promise<AnalysisResult> {
   return fetchJSON<AnalysisResult>(`/api/cases/${analysisId}`);
 }
 
-/** Review 목록 조회 */
-export function getReviews(analysisId: string): Promise<any[]> {
-  return fetchJSON<any[]>(`/api/reviews/${analysisId}`);
-}
-
-/** Review 저장 */
-export async function saveReview(review: any): Promise<any> {
-  const res = await fetch(`${BASE_URL}/api/reviews`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(review),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`API Error [${res.status}] POST /api/reviews: ${text}`);
-  }
-  return res.json();
-}
-
-/** Report 생성 */
-export async function generateReport(analysisId: string): Promise<any> {
+/** Report 생성 (프론트엔드 상태의 reviews를 모두 모아서 보냄) */
+export async function generateReport(analysisId: string, reviews: any[]): Promise<any> {
   const res = await fetch(`${BASE_URL}/api/reports`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ analysis_id: analysisId }),
+    body: JSON.stringify({ analysis_id: analysisId, reviews }),
   });
   if (!res.ok) {
     const text = await res.text();
@@ -57,65 +38,49 @@ export async function generateReport(analysisId: string): Promise<any> {
   return res.json();
 }
 
-/** Report 조회 */
-export function getReport(reportId: string): Promise<any> {
-  return fetchJSON<any>(`/api/reports/${reportId}`);
-}
-
 /** Blockchain Attestation 조회 */
-export function getAttestation(reportId: string): Promise<any> {
-  return fetchJSON<any>(`/api/reports/${reportId}/attestation`);
+export function getAttestation(reportHash: string): Promise<any> {
+  return fetchJSON<any>(`/api/reports/attestation/${reportHash}`);
 }
 
 /** Report Blockchain에 발급 */
-export async function issueReport(reportId: string): Promise<any> {
-  const res = await fetch(`${BASE_URL}/api/reports/${reportId}/issue`, {
+export async function issueReport(reportId: string, reportHash: string): Promise<any> {
+  const res = await fetch(`${BASE_URL}/api/reports/issue`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ report_id: reportId, report_hash: reportHash }),
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`API Error [${res.status}] POST /api/reports/${reportId}/issue: ${text}`);
+    throw new Error(`API Error [${res.status}] POST /api/reports/issue: ${text}`);
   }
   return res.json();
 }
 
-/** Report 검증 */
-export async function verifyReport(reportId: string): Promise<any> {
-  const res = await fetch(`${BASE_URL}/api/reports/${reportId}/verify`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`API Error [${res.status}] POST /api/reports/${reportId}/verify: ${text}`);
-  }
-  return res.json();
-}
-
-/** Report 취소 (Revoke) */
-export async function revokeReport(reportId: string): Promise<any> {
-  const res = await fetch(`${BASE_URL}/api/reports/${reportId}/revoke`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`API Error [${res.status}] POST /api/reports/${reportId}/revoke: ${text}`);
-  }
-  return res.json();
-}
-
-/** 외부 JSON Report 파일 검증 */
-export async function verifyExternalReport(reportData: any): Promise<any> {
-  const res = await fetch(`${BASE_URL}/api/reports/verify/external`, {
+/** Report 검증 (Full JSON 파일 업로드 시 사용) */
+export async function verifyReport(reportData: any): Promise<any> {
+  const res = await fetch(`${BASE_URL}/api/reports/verify`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(reportData),
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`API Error [${res.status}] POST /api/reports/verify/external: ${text}`);
+    throw new Error(`API Error [${res.status}] POST /api/reports/verify: ${text}`);
+  }
+  return res.json();
+}
+
+/** Report 취소 (Revoke) */
+export async function revokeReport(reportId: string, reportHash: string): Promise<any> {
+  const res = await fetch(`${BASE_URL}/api/reports/revoke`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ report_id: reportId, report_hash: reportHash }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`API Error [${res.status}] POST /api/reports/revoke: ${text}`);
   }
   return res.json();
 }

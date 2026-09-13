@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { CaseSummary } from "../types/analysis";
 import { getCases } from "../services/api";
+import { useApp } from "../i18n/context";
 
 // ─── Risk Level helpers ─────────────────────────────────────────────────────
 
@@ -18,17 +19,6 @@ function barClass(level: string): string {
   return "low";
 }
 
-function statusBadgeClass(status: string): string {
-  if (status === "REVIEWED") return "status-reviewed";
-  return "status-pending";
-}
-
-function statusLabel(status: string): string {
-  if (status === "REVIEWED")       return "Reviewed";
-  if (status === "PENDING_REVIEW") return "Pending Review";
-  return status;
-}
-
 // ─── Case Card ──────────────────────────────────────────────────────────────
 
 interface CaseCardProps {
@@ -38,8 +28,12 @@ interface CaseCardProps {
 
 function CaseCard({ caseItem, index }: CaseCardProps) {
   const navigate = useNavigate();
+  const { t } = useApp();
   const scorePercent = Math.round(caseItem.prediction_score * 100);
   const caseNumber = String(index + 1).padStart(3, "0");
+
+  const statusLabel = caseItem.status === "REVIEWED" ? t("dashboard.status.reviewed") : t("dashboard.status.pending");
+  const statusBadgeClass = caseItem.status === "REVIEWED" ? "status-reviewed" : "status-pending";
 
   return (
     <article
@@ -56,19 +50,19 @@ function CaseCard({ caseItem, index }: CaseCardProps) {
     >
       <div className="case-card-header">
         <span className="case-id">Case #{caseNumber}</span>
-        <span className={`case-status-badge ${statusBadgeClass(caseItem.status)}`}>
-          {statusLabel(caseItem.status)}
+        <span className={`case-status-badge ${statusBadgeClass}`}>
+          {statusLabel}
         </span>
       </div>
 
       <div className="case-target">
-        <div className="case-target-label">Target Transaction</div>
+        <div className="case-target-label">{t("dashboard.card.target")}</div>
         <div className="case-target-value">{caseItem.target_transaction.toUpperCase()}</div>
       </div>
 
       <div className="case-metrics">
         <div className="metric">
-          <span className="metric-label">AI Score</span>
+          <span className="metric-label">{t("dashboard.card.score")}</span>
           <span className={`metric-value ${riskClass(caseItem.prediction_level)}`}>
             {scorePercent}%
           </span>
@@ -81,14 +75,14 @@ function CaseCard({ caseItem, index }: CaseCardProps) {
         </div>
 
         <div className="metric">
-          <span className="metric-label">Risk Level</span>
+          <span className="metric-label">{t("dashboard.card.risk")}</span>
           <span className={`metric-value ${riskClass(caseItem.prediction_level)}`}>
             {caseItem.prediction_level}
           </span>
         </div>
 
         <div className="metric">
-          <span className="metric-label">Model</span>
+          <span className="metric-label">{t("dashboard.card.model")}</span>
           <span className="metric-value" style={{ color: "var(--color-text-secondary)" }}>
             {caseItem.model_name}
           </span>
@@ -97,7 +91,7 @@ function CaseCard({ caseItem, index }: CaseCardProps) {
 
       <div className="case-card-footer">
         <button className="btn-open" id={`btn-open-${caseItem.analysis_id}`}>
-          Open Investigation
+          {t("dashboard.card.open")}
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 8h10M9 4l4 4-4 4" />
           </svg>
@@ -114,6 +108,7 @@ interface StatsBarProps {
 }
 
 function StatsBar({ cases }: StatsBarProps) {
+  const { t } = useApp();
   const total   = cases.length;
   const high    = cases.filter((c) => c.prediction_level === "HIGH").length;
   const pending = cases.filter((c) => c.status === "PENDING_REVIEW").length;
@@ -121,22 +116,22 @@ function StatsBar({ cases }: StatsBarProps) {
   return (
     <div className="stats-bar" role="region" aria-label="Case statistics">
       <div className="stat-item">
-        <span className="stat-label">Total Cases</span>
+        <span className="stat-label">{t("dashboard.stats.total")}</span>
         <span className="stat-value">{total}</span>
       </div>
       <div className="stat-divider" />
       <div className="stat-item">
-        <span className="stat-label">High Risk</span>
+        <span className="stat-label">{t("dashboard.stats.high")}</span>
         <span className="stat-value" style={{ color: "var(--color-risk-high)" }}>{high}</span>
       </div>
       <div className="stat-divider" />
       <div className="stat-item">
-        <span className="stat-label">Pending Review</span>
+        <span className="stat-label">{t("dashboard.stats.pending")}</span>
         <span className="stat-value" style={{ color: "var(--color-warning)" }}>{pending}</span>
       </div>
       <div className="stat-divider" />
       <div className="stat-item">
-        <span className="stat-label">Data Source</span>
+        <span className="stat-label">{t("dashboard.stats.source")}</span>
         <span className="stat-value" style={{ fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>
           Elliptic (Mock)
         </span>
@@ -148,6 +143,7 @@ function StatsBar({ cases }: StatsBarProps) {
 // ─── Dashboard Page ──────────────────────────────────────────────────────────
 
 export default function Dashboard() {
+  const { t } = useApp();
   const [cases, setCases] = useState<CaseSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -163,7 +159,7 @@ export default function Dashboard() {
     return (
       <div className="loading-container" role="status" aria-live="polite">
         <div className="spinner" aria-hidden="true" />
-        <span>Loading investigations...</span>
+        <span>{t("dashboard.loading")}</span>
       </div>
     );
   }
@@ -174,7 +170,7 @@ export default function Dashboard() {
         <h3>Failed to load cases</h3>
         <p>{error}</p>
         <p style={{ marginTop: "var(--space-2)", fontSize: "var(--text-xs)", color: "var(--color-text-muted)" }}>
-          Backend가 실행 중인지 확인하세요: http://localhost:8000/health
+          서버에 연결할 수 없습니다. 서비스 점검 중이거나 네트워크 오류일 수 있습니다.
         </p>
       </div>
     );
@@ -183,9 +179,9 @@ export default function Dashboard() {
   return (
     <main className="main-content" id="dashboard-main">
       <div className="page-header">
-        <h1 className="page-title">Investigation Cases</h1>
+        <h1 className="page-title">{t("dashboard.title")}</h1>
         <p className="page-subtitle">
-          AI-recommended on-chain investigation targets · Elliptic Dataset (Mock)
+          {t("dashboard.subtitle")}
         </p>
       </div>
 
@@ -193,8 +189,8 @@ export default function Dashboard() {
 
       {cases.length === 0 ? (
         <div className="error-container">
-          <h3>No cases found</h3>
-          <p>mock/ 디렉토리에 analysis-*.json 파일이 있는지 확인하세요.</p>
+          <h3>{t("dashboard.no_cases")}</h3>
+          <p>{t("dashboard.no_cases_desc")}</p>
         </div>
       ) : (
         <div className="cases-grid" id="cases-grid">
